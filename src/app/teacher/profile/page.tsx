@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function TeacherProfilePage() {
+  const router = useRouter();
+
   const [showAttendance, setShowAttendance] = useState(false);
   const [editing, setEditing] = useState(false);
 
@@ -21,6 +24,10 @@ export default function TeacherProfilePage() {
   function handleSave() {
     setProfile(temp);
     setEditing(false);
+  }
+
+  function handleLogout() {
+    router.push("/");
   }
 
   return (
@@ -75,7 +82,10 @@ export default function TeacherProfilePage() {
               {showAttendance ? "Hide Attendance" : "Check Attendance"}
             </button>
 
-            <button className="flex-1 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 py-3 font-medium">
+            <button
+              onClick={handleLogout}
+              className="flex-1 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 py-3 font-medium"
+            >
               Logout
             </button>
           </div>

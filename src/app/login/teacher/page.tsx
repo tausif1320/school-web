@@ -1,6 +1,14 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 export default function TeacherLogin() {
+  const router = useRouter();
+
+  function handleLogin() {
+    router.push("/teacher/dashboard");
+  }
+
   return (
     <main className="min-h-screen bg-[#0b1220] text-white flex items-center justify-center px-4">
       <div className="w-full max-w-md space-y-10">
@@ -41,23 +49,18 @@ export default function TeacherLogin() {
             />
           </div>
 
-          <div className="text-right text-sm text-blue-500 hover:underline cursor-pointer">
-            Forgot Password?
-          </div>
-
-          <button className="
-            w-full py-4 rounded-2xl font-medium text-lg
-            bg-gradient-to-r from-blue-600/80 to-blue-500/80
-            backdrop-blur-xl border border-white/10
-            shadow-lg shadow-blue-500/20
-            hover:scale-[1.01] active:scale-[0.98] transition
-          ">
+          <button
+            onClick={handleLogin}
+            className="
+              w-full py-4 rounded-2xl font-medium text-lg
+              bg-gradient-to-r from-blue-600/80 to-blue-500/80
+              backdrop-blur-xl border border-white/10
+              shadow-lg shadow-blue-500/20
+              hover:scale-[1.01] active:scale-[0.98] transition
+            "
+          >
             Log In →
           </button>
-
-          <p className="text-center text-sm text-slate-400">
-            Having trouble? <span className="text-blue-500 hover:underline cursor-pointer">Contact Support</span>
-          </p>
         </div>
       </div>
     </main>

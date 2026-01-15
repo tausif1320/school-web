@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function AdminProfile() {
+  const router = useRouter();
   const [editing, setEditing] = useState(false);
 
   const [profile, setProfile] = useState({
@@ -21,18 +23,19 @@ export default function AdminProfile() {
     setEditing(false);
   }
 
+  function handleLogout() {
+    router.push("/");
+  }
+
   return (
     <div className="max-w-5xl mx-auto space-y-8">
 
-      {/* Header */}
       <div>
         <h1 className="text-3xl font-semibold">Admin Profile</h1>
         <p className="text-slate-400 mt-1">Administrative information</p>
       </div>
 
-      {/* Main card */}
       <div className="glass p-6 space-y-6">
-
         <div className="flex gap-6 items-center">
           <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-blue-500/60 to-indigo-600/60 flex items-center justify-center text-3xl font-bold">
             {profile.name.charAt(0)}
@@ -63,13 +66,15 @@ export default function AdminProfile() {
             Edit Profile
           </button>
 
-          <button className="flex-1 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400">
+          <button
+            onClick={handleLogout}
+            className="flex-1 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400"
+          >
             Logout
           </button>
         </div>
       </div>
 
-      {/* Modal */}
       {editing && (
         <div className="fixed inset-0 bg-black/70 backdrop-blur flex items-center justify-center px-4 z-50">
           <div className="glass p-6 max-w-xl w-full space-y-4">
