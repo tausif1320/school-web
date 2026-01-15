@@ -22,7 +22,7 @@ export type Teacher = {
   designation: string;
 };
 
-export type QrSettings = {
+type QrSettings = {
   latitude: string;
   longitude: string;
   radius: string;
@@ -47,8 +47,6 @@ type SchoolContextType = {
 /* ---------------- CONTEXT ---------------- */
 
 const SchoolContext = createContext<SchoolContextType | null>(null);
-
-/* ---------------- PROVIDER ---------------- */
 
 export function SchoolProvider({ children }: { children: React.ReactNode }) {
   /* ---------- Students ---------- */
@@ -84,21 +82,9 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
 
   /* ---------- Teachers ---------- */
   const [teachers, setTeachers] = useState<Teacher[]>([
-    {
-      id: 1,
-      name: "Aaliya",
-      designation: "Mathematics Teacher",
-    },
-    {
-      id: 2,
-      name: "Ali",
-      designation: "Physics Teacher",
-    },
-    {
-      id: 3,
-      name: "Aalu",
-      designation: "English Teacher",
-    },
+    { id: 1, name: "Aaliya", designation: "Mathematics Teacher" },
+    { id: 2, name: "Ali", designation: "Physics Teacher" },
+    { id: 3, name: "Aalu", designation: "English Teacher" },
   ]);
 
   /* ---------- Attendance ---------- */
