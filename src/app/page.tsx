@@ -1,65 +1,79 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useRouter } from "next/navigation";
+
+export default function RoleSelectPage() {
+  const router = useRouter();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <main className="min-h-screen bg-[#0b1220] text-white flex items-center justify-center px-4">
+      <div className="w-full max-w-5xl space-y-10">
+
+        {/* Logo */}
+        <div className="flex justify-center">
+          <div className="w-16 h-16 rounded-2xl bg-[#0f1d34] flex items-center justify-center text-2xl">
+            🎓
+          </div>
+        </div>
+
+        {/* Heading */}
+        <div className="text-center space-y-2">
+          <p className="text-xs tracking-widest text-slate-400 uppercase">
+            School Management System
+          </p>
+          <h1 className="text-4xl font-semibold">Select Your Role</h1>
+          <p className="text-slate-400 text-sm">
+            Please choose your access level to continue.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          {/* Admin */}
+          <button
+            onClick={() => router.push("/login/admin")}
+            className="bg-[#111a2e] border border-white/5 rounded-2xl p-6 flex gap-6 hover:bg-[#16223d] transition text-left"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+            <div className="flex-1 space-y-3">
+              <h2 className="text-xl font-semibold">Administrator</h2>
+              <p className="text-sm text-slate-400">
+                Full access to system configuration and user management.
+              </p>
+            </div>
+
+            <img
+              src="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?q=80&w=500"
+              alt="Admin"
+              className="w-28 h-28 rounded-xl object-cover shrink-0"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+          </button>
+
+          {/* Teacher */}
+          <button
+            onClick={() => router.push("/login/teacher")}
+            className="bg-[#111a2e] border border-white/5 rounded-2xl p-6 flex gap-6 hover:bg-[#16223d] transition text-left"
           >
-            Documentation
-          </a>
+            <div className="flex-1 space-y-3">
+              <h2 className="text-xl font-semibold">Teacher</h2>
+              <p className="text-sm text-slate-400">
+                Manage classes, grade assignments, and track attendance.
+              </p>
+            </div>
+
+            <img
+              src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=500"
+              alt="Teacher"
+              className="w-28 h-28 rounded-xl object-cover shrink-0"
+            />
+          </button>
         </div>
-      </main>
-    </div>
+
+        {/* Footer */}
+        <div className="text-center text-xs text-slate-500 pt-4">
+          Privacy Policy · Need Help?
+        </div>
+      </div>
+    </main>
   );
 }
