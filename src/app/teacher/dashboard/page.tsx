@@ -136,6 +136,16 @@ export default function TeacherDashboard() {
           >
             Mark Departure
           </button>
+          <button
+  onClick={() => {
+    localStorage.removeItem("teacher-session");
+    location.reload();
+  }}
+  className="mt-4 w-full bg-white/10 border border-white/10 py-2 rounded-xl text-sm"
+>
+  Reset Session (Dev Only)
+</button>
+
         </div>
       </div>
     </div>
