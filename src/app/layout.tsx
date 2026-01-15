@@ -1,6 +1,6 @@
+// src/app/layout.tsx
 import "./globals.css";
 import type { ReactNode } from "react";
-import PageTransition from "@/components/PageTransition";
 
 export const metadata = {
   title: "School Web",
@@ -10,10 +10,8 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-[#0b1220] text-white overflow-x-hidden">
-        <PageTransition>
-          {children}
-        </PageTransition>
+      <body className="min-h-screen bg-[#0b1220] text-white">
+        {children}
       </body>
     </html>
   );

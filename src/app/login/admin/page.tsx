@@ -52,6 +52,7 @@ export default function AdminLogin() {
           <button
             onClick={handleLogin}
             className="
+              ripple-btn w-full py-4 rounded-2xl font-medium text-lg
               w-full py-4 rounded-2xl font-medium text-lg
               bg-gradient-to-r from-blue-600/80 to-blue-500/80
               backdrop-blur-xl border border-white/10

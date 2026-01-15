@@ -68,7 +68,7 @@ export default function AdminProfile() {
 
           <button
             onClick={handleLogout}
-            className="flex-1 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 btn-press"
+            className="ripple-btn flex-1 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 py-3 font-medium"
           >
             Logout
           </button>

@@ -33,7 +33,7 @@ export default function RoleSelectPage() {
           {/* Admin */}
           <button
             onClick={() => router.push("/login/admin")}
-            className="bg-[#111a2e] border border-white/5 rounded-2xl p-6 flex gap-6 hover:bg-[#16223d] transition text-left"
+            className="ripple-btn bg-[#111a2e] border border-white/5 rounded-2xl p-6 flex gap-6 hover:bg-[#16223d] transition text-left"
           >
             <div className="flex-1 space-y-3">
               <h2 className="text-xl font-semibold">Administrator</h2>
