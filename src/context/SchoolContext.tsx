@@ -4,6 +4,8 @@ import React, { createContext, useContext, useState } from "react";
 
 /* ---------------- TYPES ---------------- */
 
+export type AttendanceStatus = "present" | "absent" | "late";
+
 export type Student = {
   id: number;
   admissionNo: string;
@@ -20,7 +22,7 @@ export type Teacher = {
   designation: string;
 };
 
-type QrSettings = {
+export type QrSettings = {
   latitude: string;
   longitude: string;
   radius: string;
@@ -33,9 +35,9 @@ type SchoolContextType = {
   teachers: Teacher[];
   setTeachers: React.Dispatch<React.SetStateAction<Teacher[]>>;
 
-  teacherAttendance: Record<number, "present" | "absent" | undefined>;
+  teacherAttendance: Record<number, AttendanceStatus | undefined>;
   setTeacherAttendance: React.Dispatch<
-    React.SetStateAction<Record<number, "present" | "absent" | undefined>>
+    React.SetStateAction<Record<number, AttendanceStatus | undefined>>
   >;
 
   qrSettings: QrSettings;
@@ -45,6 +47,8 @@ type SchoolContextType = {
 /* ---------------- CONTEXT ---------------- */
 
 const SchoolContext = createContext<SchoolContextType | null>(null);
+
+/* ---------------- PROVIDER ---------------- */
 
 export function SchoolProvider({ children }: { children: React.ReactNode }) {
   /* ---------- Students ---------- */
@@ -70,7 +74,7 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
     {
       id: 3,
       admissionNo: "A1003",
-      name: "candy",
+      name: "Candy",
       class: "8",
       section: "A",
       gender: "Male",
@@ -99,7 +103,7 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
 
   /* ---------- Attendance ---------- */
   const [teacherAttendance, setTeacherAttendance] = useState<
-    Record<number, "present" | "absent" | undefined>
+    Record<number, AttendanceStatus | undefined>
   >({});
 
   /* ---------- QR + GPS ---------- */

@@ -13,9 +13,9 @@ export default function AttendancePage() {
     }));
   };
 
-  const present = Object.values(teacherAttendance).filter(s => s === "Present").length;
-  const absent = Object.values(teacherAttendance).filter(s => s === "Absent").length;
-  const late = Object.values(teacherAttendance).filter(s => s === "Late").length;
+  const present = Object.values(teacherAttendance).filter(s => s === "present").length;
+  const absent = Object.values(teacherAttendance).filter(s => s === "absent").length;
+  const late = Object.values(teacherAttendance).filter(s => s === "late").length;
 
   return (
     <div className="max-w-6xl mx-auto space-y-8">
@@ -57,24 +57,24 @@ export default function AttendancePage() {
 
                     <td className="px-6 py-4 text-right space-x-2">
                       <AttendanceButton
-                        active={status === "Present"}
-                        onClick={() => setStatus(t.id, "Present")}
+                        active={status === "present"}
+                        onClick={() => setStatus(t.id, "present")}
                         color="green"
                       >
                         <CheckCircle size={18} />
                       </AttendanceButton>
 
                       <AttendanceButton
-                        active={status === "Late"}
-                        onClick={() => setStatus(t.id, "Late")}
+                        active={status === "late"}
+                        onClick={() => setStatus(t.id, "late")}
                         color="orange"
                       >
                         <Clock size={18} />
                       </AttendanceButton>
 
                       <AttendanceButton
-                        active={status === "Absent"}
-                        onClick={() => setStatus(t.id, "Absent")}
+                        active={status === "absent"}
+                        onClick={() => setStatus(t.id, "absent")}
                         color="red"
                       >
                         <XCircle size={18} />
