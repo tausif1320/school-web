@@ -2,74 +2,69 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Html5Qrcode } from "html5-qrcode";
+import { BrowserMultiFormatReader } from "@zxing/browser";
 
 export default function QRScanPage() {
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const router = useRouter();
-  const scannerRef = useRef<Html5Qrcode | null>(null);
-  const [started, setStarted] = useState(false);
+
+  const [scanning, setScanning] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     return () => {
-      if (scannerRef.current) {
-        scannerRef.current.stop().catch(() => {});
+      // Cleanup camera on unmount
+      if (videoRef.current?.srcObject) {
+        const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
+        tracks.forEach(track => track.stop());
       }
     };
   }, []);
 
-  const startScanner = async () => {
-    setError(null);
-
+  const startScanning = async () => {
     try {
-      const element = document.getElementById("qr-reader");
-      if (!element) throw new Error("Scanner element missing");
+      setError(null);
+      setScanning(true);
 
-      const scanner = new Html5Qrcode("qr-reader");
-      scannerRef.current = scanner;
+      const codeReader = new BrowserMultiFormatReader();
 
-      const cameras = await Html5Qrcode.getCameras();
-      if (!cameras.length) throw new Error("No camera found");
+      const devices = await BrowserMultiFormatReader.listVideoInputDevices();
+      if (!devices.length) throw new Error("No camera found");
 
+      // Prefer back camera
       const backCam =
-        cameras.find(c => c.label.toLowerCase().includes("back")) || cameras[0];
+        devices.find(d => d.label.toLowerCase().includes("back")) || devices[0];
 
-      await scanner.start(
-        backCam.id,
-        {
-          fps: 10,
-          qrbox: (w, h) => {
-            const size = Math.min(w, h) * 0.8;
-            return { width: size, height: size };
-          },
-        },
-        async (decodedText) => {
-          const now = new Date().toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          });
+      await codeReader.decodeFromVideoDevice(
+        backCam.deviceId,
+        videoRef.current!,
+        (result, err) => {
+          if (result) {
+            const now = new Date().toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
 
-          localStorage.setItem(
-            "teacher-session",
-            JSON.stringify({
-              arrivalTime: now,
-              departureTime: null,
-            })
-          );
+            localStorage.setItem(
+              "teacher-session",
+              JSON.stringify({
+                arrivalTime: now,
+                departureTime: null,
+              })
+            );
 
-          try {
-            await scanner.stop();
-          } catch {}
+            // Stop camera cleanly
+            const tracks = (videoRef.current?.srcObject as MediaStream)?.getTracks();
+            tracks?.forEach(t => t.stop());
 
-          router.push("/teacher/dashboard");
-        },
-        () => {}
+            router.push("/teacher/dashboard");
+          }
+        }
       );
-
-      setStarted(true);
-    } catch (err) {
-      console.error(err);
-      setError("Camera failed to start properly");
+    } catch (e) {
+      console.error(e);
+      setError("Failed to start camera");
+      setScanning(false);
     }
   };
 
@@ -79,17 +74,21 @@ export default function QRScanPage() {
 
         <h1 className="text-2xl font-bold">Scan QR Code</h1>
         <p className="opacity-60 text-sm">
-          Allow camera and tap start scanning
+          Tap start and point camera at QR
         </p>
 
-        <div
-          id="qr-reader"
-          className="w-full aspect-square rounded-2xl border border-white/10 overflow-hidden bg-black"
-        />
+        <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-white/10 bg-black">
+          <video
+            ref={videoRef}
+            className="w-full h-full object-cover"
+            muted
+            playsInline
+          />
+        </div>
 
-        {!started && (
+        {!scanning && (
           <button
-            onClick={startScanner}
+            onClick={startScanning}
             className="w-full py-3 bg-blue-600 rounded-xl font-medium"
           >
             Start Scanning
