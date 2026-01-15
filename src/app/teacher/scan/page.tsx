@@ -84,7 +84,7 @@ export default function QRScanPage() {
 
         <h1 className="text-2xl font-bold">Scan QR Code</h1>
         <p className="opacity-60 text-sm">
-          Point camera clearly at QR
+          Point camera clearly at QR and if not scanning, move phone slightly farther away
         </p>
 
         <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-white/10 bg-black">
