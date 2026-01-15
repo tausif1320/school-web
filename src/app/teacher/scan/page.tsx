@@ -21,33 +21,29 @@ export default function QRScanPage() {
   const startScanner = async () => {
     setError(null);
 
-    const element = document.getElementById("qr-reader");
-    if (!element) {
-      setError("Scanner element not found");
-      return;
-    }
-
     try {
+      const element = document.getElementById("qr-reader");
+      if (!element) throw new Error("Scanner element missing");
+
       const scanner = new Html5Qrcode("qr-reader");
       scannerRef.current = scanner;
 
-      const devices = await Html5Qrcode.getCameras();
-      if (!devices.length) {
-        setError("No camera found");
-        return;
-      }
+      const cameras = await Html5Qrcode.getCameras();
+      if (!cameras.length) throw new Error("No camera found");
 
-      // Prefer back camera
       const backCam =
-        devices.find(d => d.label.toLowerCase().includes("back")) || devices[0];
+        cameras.find(c => c.label.toLowerCase().includes("back")) || cameras[0];
 
       await scanner.start(
         backCam.id,
         {
           fps: 10,
-          qrbox: { width: 220, height: 220 },
+          qrbox: (w, h) => {
+            const size = Math.min(w, h) * 0.8;
+            return { width: size, height: size };
+          },
         },
-        (decodedText) => {
+        async (decodedText) => {
           const now = new Date().toLocaleTimeString([], {
             hour: "2-digit",
             minute: "2-digit",
@@ -61,9 +57,11 @@ export default function QRScanPage() {
             })
           );
 
-          scanner.stop().then(() => {
-            router.push("/teacher/dashboard");
-          });
+          try {
+            await scanner.stop();
+          } catch {}
+
+          router.push("/teacher/dashboard");
         },
         () => {}
       );
@@ -71,7 +69,7 @@ export default function QRScanPage() {
       setStarted(true);
     } catch (err) {
       console.error(err);
-      setError("Camera failed to start");
+      setError("Camera failed to start properly");
     }
   };
 
