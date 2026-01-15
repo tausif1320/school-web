@@ -84,7 +84,7 @@ export default function TeacherProfilePage() {
 
             <button
               onClick={handleLogout}
-              className="flex-1 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 py-3 font-medium"
+              className="flex-1 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 py-3 font-medium btn-press"
             >
               Logout
             </button>

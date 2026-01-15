@@ -61,14 +61,14 @@ export default function AdminProfile() {
               setTemp(profile);
               setEditing(true);
             }}
-            className="flex-1 py-3 rounded-xl bg-gradient-to-r from-blue-500/60 to-indigo-600/60"
+            className="flex-1 py-3 rounded-xl bg-gradient-to-r from-blue-500/60 to-indigo-600/60 btn-press"
           >
             Edit Profile
           </button>
 
           <button
             onClick={handleLogout}
-            className="flex-1 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400"
+            className="flex-1 py-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 btn-press"
           >
             Logout
           </button>
@@ -90,10 +90,10 @@ export default function AdminProfile() {
             </div>
 
             <div className="flex gap-4 pt-2">
-              <button onClick={handleSave} className="flex-1 py-3 bg-blue-600 rounded-xl">
+              <button onClick={handleSave} className="flex-1 py-3 bg-blue-600 rounded-xl btn-press">
                 Save
               </button>
-              <button onClick={() => setEditing(false)} className="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl">
+              <button onClick={() => setEditing(false)} className="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl btn-press">
                 Cancel
               </button>
             </div>
