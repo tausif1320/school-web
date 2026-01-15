@@ -13,10 +13,9 @@ export default function QRScanPage() {
 
   useEffect(() => {
     return () => {
-      // Cleanup camera on unmount
       if (videoRef.current?.srcObject) {
         const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
-        tracks.forEach(track => track.stop());
+        tracks.forEach(t => t.stop());
       }
     };
   }, []);
@@ -26,19 +25,18 @@ export default function QRScanPage() {
       setError(null);
       setScanning(true);
 
-      const codeReader = new BrowserMultiFormatReader();
+      const reader = new BrowserMultiFormatReader();
 
       const devices = await BrowserMultiFormatReader.listVideoInputDevices();
       if (!devices.length) throw new Error("No camera found");
 
-      // Prefer back camera
       const backCam =
         devices.find(d => d.label.toLowerCase().includes("back")) || devices[0];
 
-      await codeReader.decodeFromVideoDevice(
+      await reader.decodeFromVideoDevice(
         backCam.deviceId,
         videoRef.current!,
-        (result, err) => {
+        (result) => {
           if (result) {
             const now = new Date().toLocaleTimeString([], {
               hour: "2-digit",
@@ -53,7 +51,7 @@ export default function QRScanPage() {
               })
             );
 
-            // Stop camera cleanly
+            // Stop camera
             const tracks = (videoRef.current?.srcObject as MediaStream)?.getTracks();
             tracks?.forEach(t => t.stop());
 
@@ -61,6 +59,18 @@ export default function QRScanPage() {
           }
         }
       );
+
+      // Improve resolution (safe, typed correctly)
+      const stream = videoRef.current?.srcObject as MediaStream;
+      const track = stream?.getVideoTracks()[0];
+
+      if (track) {
+        await track.applyConstraints({
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+        });
+      }
+
     } catch (e) {
       console.error(e);
       setError("Failed to start camera");
@@ -74,7 +84,7 @@ export default function QRScanPage() {
 
         <h1 className="text-2xl font-bold">Scan QR Code</h1>
         <p className="opacity-60 text-sm">
-          Tap start and point camera at QR
+          Point camera clearly at QR
         </p>
 
         <div className="relative w-full aspect-square rounded-2xl overflow-hidden border border-white/10 bg-black">
