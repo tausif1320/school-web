@@ -4,45 +4,56 @@ import clsx from "clsx";
 
 type InputProps = {
   label?: string;
-  type?: "text" | "email" | "password" | "number" | "tel";
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
   error?: string;
-  disabled?: boolean;
-};
+  numeric?: boolean;
+} & React.InputHTMLAttributes<HTMLInputElement>;
 
 export default function Input({
   label,
-  type = "text",
-  value,
-  onChange,
-  placeholder,
   error,
-  disabled,
+  numeric,
+  className,
+  onChange,
+  ...props
 }: InputProps) {
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    let value = e.target.value;
+
+    if (numeric) {
+      value = value.replace(/[^0-9]/g, "");
+      e.target.value = value;
+    }
+
+    onChange?.(e);
+  }
+
   return (
     <div className="space-y-1">
       {label && (
-        <label className="text-sm text-slate-400">{label}</label>
+        <label className="text-sm text-slate-400">
+          {label}
+        </label>
       )}
 
       <input
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        disabled={disabled}
+        {...props}
+        onChange={handleChange}
+        inputMode={numeric ? "numeric" : undefined}
         className={clsx(
-          "w-full px-4 py-3 rounded-xl bg-white/5 border text-white outline-none transition",
-          "border-white/10 focus:border-blue-500/50 focus:ring-2 focus:ring-blue-500/20",
-          "placeholder:text-slate-500",
-          "disabled:opacity-50 disabled:cursor-not-allowed",
-          error && "border-red-500/50 focus:ring-red-500/30"
+          "w-full px-4 py-2 rounded-xl bg-white/5 border text-white outline-none transition",
+          "border-white/10 focus:border-blue-500/40 focus:ring-2 focus:ring-blue-500/20",
+          "placeholder:text-white/30",
+          error && "border-red-500/40 focus:ring-red-500/20",
+          className
         )}
       />
 
-      {error && <p className="text-xs text-red-400">{error}</p>}
+      {error && (
+        <p className="text-xs text-red-400 mt-1">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

@@ -138,10 +138,31 @@ export default function ManageTeachersPage() {
           <h2 className="text-xl font-semibold">Add New Teacher</h2>
 
           <div className="grid sm:grid-cols-2 gap-4">
-            <Input label="Name" value={form.name} onChange={(v) => setForm({ ...form, name: v })} />
-            <Input label="Email" value={form.email} onChange={(v) => setForm({ ...form, email: v })} />
-            <Input label="Phone" value={form.phone} onChange={(v) => setForm({ ...form, phone: v })} />
-            <Input label="Designation" value={form.designation} onChange={(v) => setForm({ ...form, designation: v })} />
+            <FormInput
+              label="Name"
+              value={form.name}
+              onChange={(v) => setForm({ ...form, name: v })}
+            />
+
+            <FormInput
+              label="Email"
+              value={form.email}
+              onChange={(v) => setForm({ ...form, email: v })}
+            />
+
+            <FormInput
+              label="Phone"
+              numeric
+              maxLength={10}
+              value={form.phone}
+              onChange={(v) => setForm({ ...form, phone: v })}
+            />
+
+            <FormInput
+              label="Designation"
+              value={form.designation}
+              onChange={(v) => setForm({ ...form, designation: v })}
+            />
           </div>
 
           <div className="flex gap-4 pt-2">
@@ -182,13 +203,42 @@ function Info({ label, value }: { label: string; value: string }) {
   );
 }
 
-function Input({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
+/* ---- RENAMED + SMART INPUT ---- */
+
+function FormInput({
+  label,
+  value,
+  onChange,
+  numeric,
+  maxLength,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  numeric?: boolean;
+  maxLength?: number;
+}) {
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    let val = e.target.value;
+
+    if (numeric) {
+      val = val.replace(/[^0-9]/g, "");
+    }
+
+    if (maxLength) {
+      val = val.slice(0, maxLength);
+    }
+
+    onChange(val);
+  }
+
   return (
     <div>
       <label className="text-slate-400 text-sm">{label}</label>
       <input
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={handleChange}
+        inputMode={numeric ? "numeric" : undefined}
         className="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white outline-none"
       />
     </div>
