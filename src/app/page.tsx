@@ -1,6 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Button from "@/components/ui/Button";
+
+
 
 export default function RoleSelectPage() {
   const router = useRouter();
@@ -31,10 +34,12 @@ export default function RoleSelectPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
           {/* Admin */}
-          <button
-            onClick={() => router.push("/login/admin")}
-            className="ripple-btn bg-[#111a2e] border border-white/5 rounded-2xl p-6 flex gap-6 hover:bg-[#16223d] transition text-left"
-          >
+          <Button
+  variant="secondary"
+  className="p-6 flex gap-6 text-left w-full"
+  onClick={() => router.push("/login/admin")}
+>
+
             <div className="flex-1 space-y-3">
               <h2 className="text-xl font-semibold">Administrator</h2>
               <p className="text-sm text-slate-400">
@@ -47,13 +52,15 @@ export default function RoleSelectPage() {
               alt="Admin"
               className="w-28 h-28 rounded-xl object-cover shrink-0"
             />
-          </button>
+          </Button>
 
           {/* Teacher */}
-          <button
-            onClick={() => router.push("/login/teacher")}
-            className="bg-[#111a2e] border border-white/5 rounded-2xl p-6 flex gap-6 hover:bg-[#16223d] transition text-left"
-          >
+          <Button
+  variant="secondary"
+  className="p-6 flex gap-6 text-left w-full"
+  onClick={() => router.push("/login/teacher")}
+>
+
             <div className="flex-1 space-y-3">
               <h2 className="text-xl font-semibold">Teacher</h2>
               <p className="text-sm text-slate-400">
@@ -66,7 +73,7 @@ export default function RoleSelectPage() {
               alt="Teacher"
               className="w-28 h-28 rounded-xl object-cover shrink-0"
             />
-          </button>
+          </Button>
         </div>
 
         {/* Footer */}

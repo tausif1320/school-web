@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import Button from "../ui/Button";
 export default function AdminProfile() {
   const router = useRouter();
   const [editing, setEditing] = useState(false);
@@ -56,22 +56,24 @@ export default function AdminProfile() {
         </div>
 
         <div className="flex gap-4">
-          <button
+          <Button
             onClick={() => {
               setTemp(profile);
               setEditing(true);
             }}
-            className="flex-1 py-3 rounded-xl bg-gradient-to-r from-blue-500/60 to-indigo-600/60 btn-press"
+            variant="primary"
+            className="flex-1"
           >
             Edit Profile
-          </button>
+          </Button>
 
-          <button
+          <Button
             onClick={handleLogout}
-            className="ripple-btn flex-1 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 py-3 font-medium"
+            variant="danger"
+            className="flex-1"
           >
             Logout
-          </button>
+          </Button>
         </div>
       </div>
 

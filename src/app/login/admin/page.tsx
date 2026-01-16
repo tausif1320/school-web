@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import Button from "@/components/ui/Button";
 
 export default function AdminLogin() {
   const router = useRouter();
@@ -49,19 +50,13 @@ export default function AdminLogin() {
             />
           </div>
 
-          <button
+          <Button
             onClick={handleLogin}
-            className="
-              ripple-btn w-full py-4 rounded-2xl font-medium text-lg
-              w-full py-4 rounded-2xl font-medium text-lg
-              bg-gradient-to-r from-blue-600/80 to-blue-500/80
-              backdrop-blur-xl border border-white/10
-              shadow-lg shadow-blue-500/20
-              hover:scale-[1.01] active:scale-[0.98] transition
-            "
+            variant="primary"
+            className="w-full py-4 text-lg"
           >
             Log In →
-          </button>
+          </Button>
         </div>
       </div>
     </main>

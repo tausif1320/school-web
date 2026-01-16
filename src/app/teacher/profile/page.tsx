@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import Button from "@/components/ui/Button";
 export default function TeacherProfilePage() {
   const router = useRouter();
 
@@ -65,15 +65,16 @@ export default function TeacherProfilePage() {
 
           {/* Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 pt-2">
-            <button
+            <Button
               onClick={() => {
                 setTemp(profile);
                 setEditing(true);
               }}
-              className="flex-1 rounded-xl bg-gradient-to-r from-emerald-500/60 to-teal-600/60 py-3 font-medium shadow-lg shadow-emerald-500/10"
+              variant="primary"
+              className="flex-1"
             >
               Edit Profile
-            </button>
+            </Button>
 
             <button
               onClick={() => setShowAttendance(!showAttendance)}
@@ -82,12 +83,13 @@ export default function TeacherProfilePage() {
               {showAttendance ? "Hide Attendance" : "Check Attendance"}
             </button>
 
-            <button
+            <Button
               onClick={handleLogout}
-              className="flex-1 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 py-3 font-medium btn-press"
+              variant="danger"
+              className="flex-1"
             >
               Logout
-            </button>
+            </Button>
           </div>
         </div>
 
