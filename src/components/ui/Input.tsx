@@ -5,13 +5,28 @@ import clsx from "clsx";
 type InputProps = {
   label?: string;
   error?: string;
+
+  /** Only allow numbers */
   numeric?: boolean;
+
+  /** Only allow letters + space */
+  lettersOnly?: boolean;
+
+  /** Auto trim spaces */
+  trim?: boolean;
+
+  /** Optional transform */
+  transform?: (value: string) => string;
+
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
 export default function Input({
   label,
   error,
   numeric,
+  lettersOnly,
+  trim,
+  transform,
   className,
   onChange,
   ...props
@@ -20,11 +35,27 @@ export default function Input({
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     let value = e.target.value;
 
+    // Only numbers
     if (numeric) {
       value = value.replace(/[^0-9]/g, "");
-      e.target.value = value;
     }
 
+    // Only letters + space
+    if (lettersOnly) {
+      value = value.replace(/[^a-zA-Z\s]/g, "");
+    }
+
+    // Trim spaces
+    if (trim) {
+      value = value.trimStart(); // doesn't kill UX like full trim()
+    }
+
+    // Custom transformation
+    if (transform) {
+      value = transform(value);
+    }
+
+    e.target.value = value;
     onChange?.(e);
   }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, ReactNode } from "react";
+import Input from "@/components/ui/Input";
 
 type Teacher = {
   id: number;
@@ -138,30 +139,31 @@ export default function ManageTeachersPage() {
           <h2 className="text-xl font-semibold">Add New Teacher</h2>
 
           <div className="grid sm:grid-cols-2 gap-4">
-            <FormInput
+            <Input
               label="Name"
               value={form.name}
-              onChange={(v) => setForm({ ...form, name: v })}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
             />
 
-            <FormInput
+            <Input
               label="Email"
+              type="email"
               value={form.email}
-              onChange={(v) => setForm({ ...form, email: v })}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
 
-            <FormInput
+            <Input
               label="Phone"
               numeric
               maxLength={10}
               value={form.phone}
-              onChange={(v) => setForm({ ...form, phone: v })}
+              onChange={(e) => setForm({ ...form, phone: e.target.value })}
             />
 
-            <FormInput
+            <Input
               label="Designation"
               value={form.designation}
-              onChange={(v) => setForm({ ...form, designation: v })}
+              onChange={(e) => setForm({ ...form, designation: e.target.value })}
             />
           </div>
 
@@ -199,48 +201,6 @@ function Info({ label, value }: { label: string; value: string }) {
     <div className="bg-white/5 border border-white/10 p-4 rounded-xl">
       <p className="text-slate-400 text-sm">{label}</p>
       <p>{value}</p>
-    </div>
-  );
-}
-
-/* ---- RENAMED + SMART INPUT ---- */
-
-function FormInput({
-  label,
-  value,
-  onChange,
-  numeric,
-  maxLength,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  numeric?: boolean;
-  maxLength?: number;
-}) {
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    let val = e.target.value;
-
-    if (numeric) {
-      val = val.replace(/[^0-9]/g, "");
-    }
-
-    if (maxLength) {
-      val = val.slice(0, maxLength);
-    }
-
-    onChange(val);
-  }
-
-  return (
-    <div>
-      <label className="text-slate-400 text-sm">{label}</label>
-      <input
-        value={value}
-        onChange={handleChange}
-        inputMode={numeric ? "numeric" : undefined}
-        className="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white outline-none"
-      />
     </div>
   );
 }

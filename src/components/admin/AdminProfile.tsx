@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "../ui/Button";
+import Input from "@/components/ui/Input";
+
 export default function AdminProfile() {
   const router = useRouter();
   const [editing, setEditing] = useState(false);
@@ -85,12 +87,17 @@ export default function AdminProfile() {
             <h2 className="text-xl font-semibold">Edit Admin Profile</h2>
 
             <div className="grid sm:grid-cols-2 gap-4">
-              <Input label="Name" value={temp.name} onChange={(v) => setTemp({ ...temp, name: v })} />
-              <Input label="Email" value={temp.email} onChange={(v) => setTemp({ ...temp, email: v })} />
-              <Input label="Phone" value={temp.phone} onChange={(v) => setTemp({ ...temp, phone: v })} />
-              <Input label="Role" value={temp.role} onChange={(v) => setTemp({ ...temp, role: v })} />
-              <Input label="Qualification" value={temp.qualification} onChange={(v) => setTemp({ ...temp, qualification: v })} />
-              <Input label="Experience" value={temp.experience} onChange={(v) => setTemp({ ...temp, experience: v })} />
+              <Input label="Name" value={temp.name} onChange={(e) => setTemp({ ...temp, name: e.target.value })} />
+
+              <Input label="Email" type="email" value={temp.email} onChange={(e) => setTemp({ ...temp, email: e.target.value })} />
+
+              <Input label="Phone" numeric maxLength={10} value={temp.phone} onChange={(e) => setTemp({ ...temp, phone: e.target.value })} />
+
+              <Input label="Role" value={temp.role} onChange={(e) => setTemp({ ...temp, role: e.target.value })} />
+
+              <Input label="Qualification" value={temp.qualification} onChange={(e) => setTemp({ ...temp, qualification: e.target.value })} />
+
+              <Input label="Experience" value={temp.experience} onChange={(e) => setTemp({ ...temp, experience: e.target.value })} />
             </div>
 
             <div className="flex gap-4 pt-2">
@@ -113,19 +120,6 @@ function Info({ label, value }: { label: string; value: string }) {
     <div className="bg-white/5 border border-white/10 rounded-xl p-4">
       <p className="text-slate-400 text-sm">{label}</p>
       <p>{value}</p>
-    </div>
-  );
-}
-
-function Input({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
-  return (
-    <div>
-      <label className="text-slate-400 text-sm">{label}</label>
-      <input
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full bg-black/30 border border-white/10 rounded-lg px-3 py-2 text-white outline-none"
-      />
     </div>
   );
 }

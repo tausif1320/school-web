@@ -1,13 +1,28 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 
 export default function AdminLogin() {
   const router = useRouter();
 
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
+
   function handleLogin() {
+    const newErrors: typeof errors = {};
+
+    if (!email) newErrors.email = "Email is required";
+    if (!password) newErrors.password = "Password is required";
+
+    setErrors(newErrors);
+
+    if (Object.keys(newErrors).length > 0) return;
+
     router.push("/admin/dashboard");
   }
 
@@ -33,21 +48,23 @@ export default function AdminLogin() {
             <p className="text-slate-400">School Admin Portal</p>
           </div>
 
-          <div className="space-y-2">
-            <label className="text-sm text-slate-300"></label>
-            <Input
-              label="Email Address"
-              type="email"
-              placeholder="admin@school.edu"            />
-          </div>
+          <Input
+            label="Email Address"
+            type="email"
+            placeholder="admin@school.edu"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            error={errors.email}
+          />
 
-          <div className="space-y-2">
-            <label className="text-sm text-slate-300"></label>
-            <Input
-              label="Password"
-              type="password"
-              placeholder="Enter your password"            />
-          </div>
+          <Input
+            label="Password"
+            type="password"
+            placeholder="Enter your password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            error={errors.password}
+          />
 
           <Button
             ripple

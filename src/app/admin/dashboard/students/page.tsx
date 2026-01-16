@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Eye, Pencil, Trash2, X } from "lucide-react";
 import { useSchool, Student } from "@/context/SchoolContext";
 import Input from "@/components/ui/Input";
+
 export default function Page() {
   const { students, setStudents } = useSchool();
 
@@ -202,10 +203,9 @@ function Form({
     <div className="grid grid-cols-2 gap-4">
 
       <Field label="Admission No">
-        <input
+        <Input
           value={form.admissionNo}
           onChange={(e) => setForm((p) => ({ ...p, admissionNo: e.target.value }))}
-          className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-lg outline-none"
           placeholder="e.g. A1023"
         />
       </Field>
@@ -214,7 +214,6 @@ function Form({
         <Input
           value={form.name}
           onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
-          className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-lg outline-none"
           placeholder="Student name"
         />
       </Field>
@@ -224,16 +223,14 @@ function Form({
           numeric
           value={form.class}
           onChange={(e) => setForm((p) => ({ ...p, class: e.target.value }))}
-          className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-lg outline-none"
           placeholder="e.g. 10"
         />
       </Field>
 
       <Field label="Section">
-        <input
+        <Input
           value={form.section}
           onChange={(e) => setForm((p) => ({ ...p, section: e.target.value }))}
-          className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-lg outline-none"
           placeholder="e.g. A"
         />
       </Field>
@@ -259,7 +256,6 @@ function Form({
           onChange={(e) =>
             setForm((p) => ({ ...p, parentPhone: e.target.value }))
           }
-          className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-lg outline-none"
           placeholder="e.g. 9876543210"
         />
       </Field>
@@ -281,7 +277,6 @@ function Field({
     </div>
   );
 }
-
 
 function Detail({ label, value }: { label: string; value: string }) {
   return (
