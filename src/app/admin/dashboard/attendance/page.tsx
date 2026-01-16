@@ -35,7 +35,7 @@ export default function AttendancePage() {
       </div>
 
       {/* Table */}
-      <div className="glass p-4">
+      <div className="glass p-4 transition hover:-translate-y-[2px] hover:shadow-xl hover:shadow-blue-500/10">
         <div className="overflow-x-auto">
           <table className="min-w-[800px] w-full text-sm">
             <thead className="border-b border-white/10 text-left opacity-60">
@@ -51,7 +51,10 @@ export default function AttendancePage() {
                 const status = teacherAttendance[t.id];
 
                 return (
-                  <tr key={t.id} className="border-b border-white/5 hover:bg-white/5">
+                  <tr
+                    key={t.id}
+                    className="border-b border-white/5 hover:bg-white/5 transition"
+                  >
                     <td className="px-6 py-4 font-medium">{t.name}</td>
                     <td className="px-6 py-4 opacity-60">{t.designation}</td>
 
@@ -110,7 +113,7 @@ function Stat({
   };
 
   return (
-    <div className="glass p-4 space-y-2">
+    <div className="glass p-4 space-y-2 transition hover:-translate-y-[2px] hover:shadow-xl hover:shadow-blue-500/10">
       <div className={`inline-block px-3 py-1 rounded-full text-xs ${styles[color]}`}>
         {label}
       </div>
@@ -147,7 +150,7 @@ function AttendanceButton({
   return (
     <button
       onClick={onClick}
-      className={`p-2 rounded-lg transition ${styles[color]}`}
+      className={`p-2 rounded-lg transition hover:-translate-y-[1px] hover:shadow-md ${styles[color]}`}
     >
       {children}
     </button>
