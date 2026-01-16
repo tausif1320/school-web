@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Eye, Pencil, Trash2, X } from "lucide-react";
 import { useSchool, Student } from "@/context/SchoolContext";
-
+import Input from "@/components/ui/Input";
 export default function Page() {
   const { students, setStudents } = useSchool();
 
@@ -211,7 +211,7 @@ function Form({
       </Field>
 
       <Field label="Name">
-        <input
+        <Input
           value={form.name}
           onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
           className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-lg outline-none"
@@ -220,7 +220,8 @@ function Form({
       </Field>
 
       <Field label="Class">
-        <input
+        <Input
+          numeric
           value={form.class}
           onChange={(e) => setForm((p) => ({ ...p, class: e.target.value }))}
           className="w-full bg-black/40 border border-white/10 px-3 py-2 rounded-lg outline-none"
@@ -251,7 +252,9 @@ function Form({
       </Field>
 
       <Field label="Parent Phone">
-        <input
+        <Input
+          numeric
+          maxLength={10}
           value={form.parentPhone}
           onChange={(e) =>
             setForm((p) => ({ ...p, parentPhone: e.target.value }))
