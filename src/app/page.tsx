@@ -37,7 +37,7 @@ export default function RoleSelectPage() {
             variant="secondary"
             onClick={() => router.push("/login/admin")}
             className="
-              p-6 flex gap-6 text-left w-full
+              p-6 flex items-center justify-between gap-6 text-left w-full
               transition-all duration-200
               hover:-translate-y-[2px]
               hover:shadow-xl hover:shadow-blue-500/10
@@ -54,7 +54,7 @@ export default function RoleSelectPage() {
             <img
               src="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?q=80&w=500"
               alt="Admin"
-              className="w-28 h-28 rounded-xl object-cover shrink-0"
+              className="w-28 h-28 rounded-xl object-cover flex-shrink-0"
             />
           </Button>
 
@@ -64,7 +64,7 @@ export default function RoleSelectPage() {
             variant="secondary"
             onClick={() => router.push("/login/teacher")}
             className="
-              p-6 flex gap-6 text-left w-full
+              p-6 flex items-center justify-between gap-6 text-left w-full
               transition-all duration-200
               hover:-translate-y-[2px]
               hover:shadow-xl hover:shadow-blue-500/10
@@ -81,7 +81,7 @@ export default function RoleSelectPage() {
             <img
               src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=500"
               alt="Teacher"
-              className="w-28 h-28 rounded-xl object-cover shrink-0"
+              className="w-28 h-28 rounded-xl object-cover flex-shrink-0"
             />
           </Button>
         </div>
