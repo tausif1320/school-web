@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
 
 export default function AdminLogin() {
   const router = useRouter();
@@ -34,20 +35,18 @@ export default function AdminLogin() {
 
           <div className="space-y-2">
             <label className="text-sm text-slate-300">Email Address</label>
-            <input
+            <Input
+              label="Email Address"
               type="email"
-              placeholder="admin@school.edu"
-              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+              placeholder="admin@school.edu"            />
           </div>
 
           <div className="space-y-2">
             <label className="text-sm text-slate-300">Password</label>
-            <input
+            <Input
+              label="Password"
               type="password"
-              placeholder="Enter your password"
-              className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+              placeholder="Enter your password"            />
           </div>
 
           <Button

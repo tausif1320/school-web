@@ -70,6 +70,7 @@ export default function TeacherProfilePage() {
                 setTemp(profile);
                 setEditing(true);
               }}
+              ripple
               variant="primary"
               className="flex-1"
             >
@@ -84,6 +85,7 @@ export default function TeacherProfilePage() {
             </button>
 
             <Button
+              ripple
               onClick={handleLogout}
               variant="danger"
               className="flex-1"
