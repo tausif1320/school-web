@@ -10,6 +10,8 @@ type ButtonProps = {
   className?: string;
   type?: "button" | "submit";
   ripple?: boolean;
+  loading?: boolean;
+  disabled?: boolean;
 };
 
 export default function Button({
@@ -19,10 +21,14 @@ export default function Button({
   className = "",
   type = "button",
   ripple = false,
+  loading = false,
+  disabled = false,
 }: ButtonProps) {
   const btnRef = useRef<HTMLButtonElement>(null);
 
   function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+    if (loading || disabled) return; // ⬅️ IMPORTANT: block clicks when loading
+
     if (ripple && btnRef.current) {
       const button = btnRef.current;
       const rect = button.getBoundingClientRect();
@@ -50,9 +56,11 @@ export default function Button({
       ref={btnRef}
       type={type}
       onClick={handleClick}
+      disabled={loading || disabled}
       className={clsx(
-        "relative overflow-hidden rounded-xl px-4 py-2 text-sm font-medium cursor-pointer select-none",
+        "relative overflow-hidden rounded-xl px-4 py-2 text-sm font-medium select-none",
         "transition active:scale-[0.97]",
+        loading && "cursor-not-allowed opacity-80",
         {
           "bg-gradient-to-r from-blue-600/90 to-blue-500/90 shadow-lg shadow-blue-500/20 hover:brightness-110":
             variant === "primary",
@@ -66,7 +74,17 @@ export default function Button({
         className
       )}
     >
-      {children}
+      {/* Spinner overlay */}
+      {loading && (
+        <span className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-xl">
+          <span className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
+        </span>
+      )}
+
+      {/* Hide text while loading */}
+      <span className={clsx("relative", loading && "opacity-0")}>
+        {children}
+      </span>
     </button>
   );
 }

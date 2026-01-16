@@ -7,7 +7,7 @@ import Input from "@/components/ui/Input";
 
 export default function TeacherLogin() {
   const router = useRouter();
-
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,8 +22,14 @@ export default function TeacherLogin() {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length > 0) return;
+    
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      router.push("/teacher/dashboard");
 
-    router.push("/teacher/dashboard");
+    },1000);
+    
   }
 
   return (
@@ -68,6 +74,7 @@ export default function TeacherLogin() {
 
           <Button
             ripple
+            loading={loading}
             onClick={handleLogin}
             variant="primary"
             className="w-full py-4 text-lg"

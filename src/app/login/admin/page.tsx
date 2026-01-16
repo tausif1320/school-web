@@ -7,6 +7,7 @@ import Input from "@/components/ui/Input";
 
 export default function AdminLogin() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,6 +15,7 @@ export default function AdminLogin() {
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
 
   function handleLogin() {
+    
     const newErrors: typeof errors = {};
 
     if (!email) newErrors.email = "Email is required";
@@ -23,7 +25,13 @@ export default function AdminLogin() {
 
     if (Object.keys(newErrors).length > 0) return;
 
-    router.push("/admin/dashboard");
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      router.push("/admin/dashboard");
+    }, 1000);
+
+    
   }
 
   return (
@@ -68,6 +76,7 @@ export default function AdminLogin() {
 
           <Button
             ripple
+            loading={loading}
             onClick={handleLogin}
             variant="primary"
             className="w-full py-4 text-lg"
