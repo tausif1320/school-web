@@ -51,6 +51,7 @@ export default function AdminLogin() {
           </div>
 
           <Button
+            ripple
             onClick={handleLogin}
             variant="primary"
             className="w-full py-4 text-lg"

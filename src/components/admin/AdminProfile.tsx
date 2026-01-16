@@ -57,6 +57,7 @@ export default function AdminProfile() {
 
         <div className="flex gap-4">
           <Button
+            ripple
             onClick={() => {
               setTemp(profile);
               setEditing(true);
@@ -68,6 +69,7 @@ export default function AdminProfile() {
           </Button>
 
           <Button
+            ripple
             onClick={handleLogout}
             variant="danger"
             className="flex-1"

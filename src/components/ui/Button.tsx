@@ -1,14 +1,15 @@
 "use client";
 
-import { ReactNode } from "react";
+import { useRef } from "react";
 import clsx from "clsx";
 
-type Props = {
-  children: ReactNode;
+type ButtonProps = {
+  children: React.ReactNode;
   onClick?: () => void;
   variant?: "primary" | "secondary" | "danger";
   className?: string;
   type?: "button" | "submit";
+  ripple?: boolean;
 };
 
 export default function Button({
@@ -17,15 +18,43 @@ export default function Button({
   variant = "primary",
   className = "",
   type = "button",
-}: Props) {
+  ripple = false,
+}: ButtonProps) {
+  const btnRef = useRef<HTMLButtonElement>(null);
+
+  function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+    if (ripple && btnRef.current) {
+      const button = btnRef.current;
+      const rect = button.getBoundingClientRect();
+
+      const circle = document.createElement("span");
+      const diameter = Math.max(rect.width, rect.height);
+      const radius = diameter / 2;
+
+      circle.style.width = circle.style.height = `${diameter}px`;
+      circle.style.left = `${e.clientX - rect.left - radius}px`;
+      circle.style.top = `${e.clientY - rect.top - radius}px`;
+      circle.className = "ripple";
+
+      const oldRipple = button.querySelector(".ripple");
+      if (oldRipple) oldRipple.remove();
+
+      button.appendChild(circle);
+    }
+
+    onClick?.();
+  }
+
   return (
     <button
+      ref={btnRef}
       type={type}
-      onClick={onClick}
+      onClick={handleClick}
       className={clsx(
-        "rounded-xl px-4 py-2 text-sm font-medium transition active:scale-[0.97] cursor-pointer select-none",
+        "relative overflow-hidden rounded-xl px-4 py-2 text-sm font-medium cursor-pointer select-none",
+        "transition active:scale-[0.97]",
         {
-          "bg-gradient-to-r from-blue-600/90 to-blue-500/90 hover:opacity-95 shadow-md shadow-blue-500/20":
+          "bg-gradient-to-r from-blue-600/90 to-blue-500/90 shadow-lg shadow-blue-500/20 hover:brightness-110":
             variant === "primary",
 
           "bg-white/5 border border-white/10 hover:bg-white/10":

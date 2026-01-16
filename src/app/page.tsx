@@ -35,6 +35,7 @@ export default function RoleSelectPage() {
 
           {/* Admin */}
           <Button
+          ripple
   variant="secondary"
   className="p-6 flex gap-6 text-left w-full"
   onClick={() => router.push("/login/admin")}
@@ -56,6 +57,7 @@ export default function RoleSelectPage() {
 
           {/* Teacher */}
           <Button
+          ripple
   variant="secondary"
   className="p-6 flex gap-6 text-left w-full"
   onClick={() => router.push("/login/teacher")}
