@@ -164,7 +164,7 @@ function StatCard({ title, value, color, Icon }: StatCardProps) {
   };
 
   return (
-    <div className="glass p-6">
+    <div className="glass p-6 transition-all duration-200 hover:-translate-y-[2px] hover:shadow-xl hover:shadow-blue-500/10">
       <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${glow[color]}`}>
         <Icon size={20} />
       </div>
@@ -185,7 +185,7 @@ function ActionItem({ title, subtitle, color, Icon, href }: ActionItemProps) {
   return (
     <Link
       href={href}
-      className="glass p-6 flex justify-between items-center hover:scale-[1.02] transition"
+      className="glass p-6 transition-all duration-200 hover:-translate-y-[2px] hover:shadow-xl hover:shadow-blue-500/10 flex justify-between items-center hover:scale-[1.02] transition"
     >
       <div className="flex gap-4 items-center">
         <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${glow[color]}`}>

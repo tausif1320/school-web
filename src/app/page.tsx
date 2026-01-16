@@ -3,8 +3,6 @@
 import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
 
-
-
 export default function RoleSelectPage() {
   const router = useRouter();
 
@@ -35,12 +33,17 @@ export default function RoleSelectPage() {
 
           {/* Admin */}
           <Button
-          ripple
-  variant="secondary"
-  className="p-6 flex gap-6 text-left w-full"
-  onClick={() => router.push("/login/admin")}
->
-
+            ripple
+            variant="secondary"
+            onClick={() => router.push("/login/admin")}
+            className="
+              p-6 flex gap-6 text-left w-full
+              transition-all duration-200
+              hover:-translate-y-[2px]
+              hover:shadow-xl hover:shadow-blue-500/10
+              active:translate-y-0
+            "
+          >
             <div className="flex-1 space-y-3">
               <h2 className="text-xl font-semibold">Administrator</h2>
               <p className="text-sm text-slate-400">
@@ -57,12 +60,17 @@ export default function RoleSelectPage() {
 
           {/* Teacher */}
           <Button
-          ripple
-  variant="secondary"
-  className="p-6 flex gap-6 text-left w-full"
-  onClick={() => router.push("/login/teacher")}
->
-
+            ripple
+            variant="secondary"
+            onClick={() => router.push("/login/teacher")}
+            className="
+              p-6 flex gap-6 text-left w-full
+              transition-all duration-200
+              hover:-translate-y-[2px]
+              hover:shadow-xl hover:shadow-blue-500/10
+              active:translate-y-0
+            "
+          >
             <div className="flex-1 space-y-3">
               <h2 className="text-xl font-semibold">Teacher</h2>
               <p className="text-sm text-slate-400">

@@ -34,7 +34,7 @@ export default function TeacherLogin() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm text-slate-300">Email Address</label>
+            <label className="text-sm text-slate-300"></label>
             <Input
               label="Email Address"
               type="email"
@@ -43,7 +43,7 @@ export default function TeacherLogin() {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm text-slate-300">Password</label>
+            <label className="text-sm text-slate-300"></label>
             <Input
               label="Password"
               type="password"
