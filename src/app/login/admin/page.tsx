@@ -5,10 +5,12 @@ import { useState } from "react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Page from "@/components/ui/Page";
+import { useToast } from "@/components/ui/Toast";
 
 export default function AdminLogin() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const {showToast} = useToast();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -31,6 +33,7 @@ export default function AdminLogin() {
       setLoading(false);
       router.push("/admin/dashboard");
     }, 1000);
+    showToast("Login successful","success");
 
     
   }

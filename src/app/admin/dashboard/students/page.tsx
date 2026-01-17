@@ -4,11 +4,14 @@ import { useState } from "react";
 import { Eye, Pencil, Trash2, X } from "lucide-react";
 import { useSchool, Student } from "@/context/SchoolContext";
 import Input from "@/components/ui/Input";
+import { useToast } from "@/components/ui/Toast";
+
 
 export default function Page() {
   const { students, setStudents } = useSchool();
 
   const [search, setSearch] = useState("");
+  const {showToast} = useToast();
   const [classFilter, setClassFilter] = useState("all");
   const [loading ,setLoading ] = useState(false);
   const [viewing, setViewing] = useState<Student | null>(null);
@@ -50,6 +53,7 @@ export default function Page() {
     setSaving(true);
     setTimeout(() => {
     setStudents((prev) => [...prev, { id: Date.now(), ...form }]);
+    showToast("Student added successfully", "success");
     resetForm();
     setAdding(false);
     setSaving(false);
@@ -65,6 +69,7 @@ export default function Page() {
     setStudents((prev) =>
       prev.map((s) => (s.id === editing.id ? { ...editing, ...form } : s))
     );
+    showToast("Student updated successfully","success");
     setEditing(null);
     setSaving(false);
   }, 600);
@@ -78,6 +83,7 @@ export default function Page() {
 
   setTimeout(() => {
     setStudents((prev) => prev.filter((s) => s.id !== deleting.id));
+    showToast("Student deleted successfully","success");
     setDeleting(null);
     setDeletingLoading(false);
   }, 600);

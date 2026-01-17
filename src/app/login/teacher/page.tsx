@@ -5,12 +5,14 @@ import { useState } from "react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Page from "@/components/ui/Page";
+import { useToast } from "@/components/ui/Toast";
 
 export default function TeacherLogin() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const {showToast} = useToast();
 
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
 
@@ -30,6 +32,7 @@ export default function TeacherLogin() {
       router.push("/teacher/dashboard");
 
     },1000);
+    showToast("Login successful","success");
     
   }
 

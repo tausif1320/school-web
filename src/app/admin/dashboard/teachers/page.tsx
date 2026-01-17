@@ -3,6 +3,7 @@
 import { useState, ReactNode } from "react";
 import Input from "@/components/ui/Input";
 import Page from "@/components/ui/Page";
+import { useToast } from "@/components/ui/Toast";
 
 type Teacher = {
   id: number;
@@ -14,6 +15,7 @@ type Teacher = {
 
 export default function ManageTeachersPage() {
   const [saving, setSaving] = useState(false);
+  const {showToast} = useToast();
   const [teachers, setTeachers] = useState<Teacher[]>([
     {
       id: 1,
@@ -42,7 +44,12 @@ export default function ManageTeachersPage() {
   });
 
   function handleAddTeacher() {
-  if (!form.name || !form.email) return;
+  if (!form.name || !form.email) {
+    showToast("Name and Email required", "error")
+    return;
+  }
+
+    
 
   setSaving(true);
 
@@ -51,6 +58,8 @@ export default function ManageTeachersPage() {
       ...prev,
       { id: Date.now(), ...form },
     ]);
+
+    showToast("Teacher added successfully", "success")
 
     setForm({ name: "", email: "", phone: "", designation: "" });
     setAdding(false);
@@ -62,6 +71,7 @@ export default function ManageTeachersPage() {
   function handleRemove(id: number, name: string) {
     if (confirm(`Remove ${name}? This cannot be undone.`)) {
       setTeachers((prev) => prev.filter((t) => t.id !== id));
+      showToast("Teacher removed", "info")
     }
   }
 

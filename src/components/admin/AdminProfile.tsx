@@ -5,11 +5,13 @@ import { useRouter } from "next/navigation";
 import Button from "../ui/Button";
 import Input from "@/components/ui/Input";
 import Page from "../ui/Page";
+import { useToast } from "../ui/Toast";
 
 export default function AdminProfile() {
   const router = useRouter();
   const [editing, setEditing] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
+  const {showToast} = useToast();
 
   const [profile, setProfile] = useState({
     name: "Aaliya",
@@ -25,6 +27,8 @@ export default function AdminProfile() {
   function handleSave() {
     setProfile(temp);
     setEditing(false);
+    showToast("Profile updated successfully", "success");
+
   }
 
   function handleLogout() {
@@ -32,6 +36,8 @@ export default function AdminProfile() {
     setTimeout(() => {
       router.push("/");
     },1000);
+    showToast("Logged out", "info");
+
     
   }
 
