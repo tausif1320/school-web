@@ -253,7 +253,7 @@ function Modal({
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown",handleKey);
 
-  },[onClose]);
+  },[]);
   return (
     <div className="fixed inset-0 bg-black/70 z-50 flex justify-center items-center px-4">
       <div className="bg-[#0B1628]/95 border border-white/10 rounded-2xl p-6 w-full max-w-lg space-y-4 relative shadow-2xl">

@@ -19,6 +19,8 @@ export type Student = {
 export type Teacher = {
   id: number;
   name: string;
+  email: string;
+  phone: string;
   designation: string;
 };
 
@@ -82,9 +84,20 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
 
   /* ---------- Teachers ---------- */
   const [teachers, setTeachers] = useState<Teacher[]>([
-    { id: 1, name: "Aaliya", designation: "Mathematics Teacher" },
-    { id: 2, name: "Ali", designation: "Physics Teacher" },
-    { id: 3, name: "Aalu", designation: "English Teacher" },
+    {
+      id: 1,
+      name: "Anita Sharma",
+      email: "anita@school.edu",
+      phone: "9876543210",
+      designation: "Mathematics Teacher",
+    },
+    {
+      id: 2,
+      name: "Rohit Mehta",
+      email: "rohit@school.edu",
+      phone: "9123456789",
+      designation: "Physics Teacher",
+    },
   ]);
 
   /* ---------- Attendance ---------- */

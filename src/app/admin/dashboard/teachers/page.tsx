@@ -4,6 +4,7 @@ import { useState, ReactNode, useRef, useEffect } from "react";
 import Input from "@/components/ui/Input";
 import Page from "@/components/ui/Page";
 import { useToast } from "@/components/ui/Toast";
+import { useSchool } from "@/context/SchoolContext";
 
 type Teacher = {
   id: number;
@@ -16,22 +17,7 @@ type Teacher = {
 export default function ManageTeachersPage() {
   const [saving, setSaving] = useState(false);
   const { showToast } = useToast();
-  const [teachers, setTeachers] = useState<Teacher[]>([
-    {
-      id: 1,
-      name: "Anita Sharma",
-      email: "anita@school.edu",
-      phone: "+91 9876543210",
-      designation: "Mathematics Teacher",
-    },
-    {
-      id: 2,
-      name: "Rohit Mehta",
-      email: "rohit@school.edu",
-      phone: "+91 9123456789",
-      designation: "Physics Teacher",
-    },
-  ]);
+  const {teachers, setTeachers} = useSchool();
 
   const [selected, setSelected] = useState<Teacher | null>(null);
   const [adding, setAdding] = useState(false);
@@ -251,7 +237,7 @@ function Modal({ children, onClose }: { children: ReactNode; onClose: () => void
 
     document.addEventListener("keydown", handleKey);
     return () => document.removeEventListener("keydown", handleKey);
-  }, [onClose]);
+  }, []);
 
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur flex justify-center items-center px-4 z-50">
