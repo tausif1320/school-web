@@ -2,11 +2,13 @@
 
 import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
+import Page from "@/components/ui/Page";
 
 export default function RoleSelectPage() {
   const router = useRouter();
 
   return (
+    <Page>
     <main className="min-h-screen bg-[#0b1220] text-white flex items-center justify-center px-4">
       <div className="w-full max-w-5xl space-y-10">
 
@@ -51,7 +53,9 @@ export default function RoleSelectPage() {
       src="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?q=80&w=500"
       className="w-28 h-28 rounded-xl object-cover flex-shrink-0"
     />
+    
   </div>
+  
 </Button>
 
 
@@ -85,5 +89,6 @@ export default function RoleSelectPage() {
         </div>
       </div>
     </main>
+    </Page>
   );
 }

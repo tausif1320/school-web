@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+import Page from "@/components/ui/Page";
 
 export default function AdminLogin() {
   const router = useRouter();
@@ -35,6 +36,7 @@ export default function AdminLogin() {
   }
 
   return (
+    <Page>
     <main className="min-h-screen bg-[#0b1220] text-white flex items-center justify-center px-4">
       <div className="w-full max-w-md space-y-10">
 
@@ -86,5 +88,6 @@ export default function AdminLogin() {
         </div>
       </div>
     </main>
+    </Page>
   );
 }

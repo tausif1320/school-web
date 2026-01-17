@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { QRCodeCanvas } from "qrcode.react";
 import { RefreshCw, Crosshair } from "lucide-react";
 import { useSchool } from "@/context/SchoolContext";
+import Page from "@/components/ui/Page";
 
 function generateToken() {
   const now = new Date();
@@ -73,6 +74,7 @@ export default function QRPage() {
   }
 
   return (
+    <Page>
     <div className="max-w-6xl mx-auto space-y-10">
       <div>
         <h1 className="text-3xl font-semibold">QR Attendance Control</h1>
@@ -155,5 +157,7 @@ export default function QRPage() {
         </div>
       </div>
     </div>
+    </Page>
   );
+  
 }

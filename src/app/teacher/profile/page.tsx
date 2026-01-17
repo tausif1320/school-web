@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { UserStar } from "lucide-react";
+import Page from "@/components/ui/Page";
 
 export default function TeacherProfilePage() {
   const router = useRouter();
@@ -38,6 +39,7 @@ export default function TeacherProfilePage() {
   }
 
   return (
+    <Page>
     <div className="min-h-screen bg-gradient-to-br from-[#050B14] via-[#0A1220] to-[#0E1A2F] text-white px-4 py-8">
       <div className="max-w-5xl mx-auto space-y-8">
 
@@ -171,6 +173,7 @@ export default function TeacherProfilePage() {
         </div>
       )}
     </div>
+    </Page>
   );
 }
 

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Bell, QrCode } from "lucide-react";
+import Page from "@/components/ui/Page";
 
 type Session = {
   arrivalTime: string | null;
@@ -46,6 +47,7 @@ export default function TeacherDashboard() {
   const date = now.getDate();
 
   return (
+    <Page>
     <div className="min-h-screen bg-[#050B14] text-white">
 
       {/* Header */}
@@ -149,5 +151,6 @@ export default function TeacherDashboard() {
         </div>
       </div>
     </div>
+    </Page>
   );
 }

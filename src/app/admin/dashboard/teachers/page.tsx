@@ -2,6 +2,7 @@
 
 import { useState, ReactNode } from "react";
 import Input from "@/components/ui/Input";
+import Page from "@/components/ui/Page";
 
 type Teacher = {
   id: number;
@@ -65,6 +66,7 @@ export default function ManageTeachersPage() {
   }
 
   return (
+    <Page>
     <div className="max-w-6xl mx-auto space-y-8">
 
       {/* Header */}
@@ -185,6 +187,7 @@ export default function ManageTeachersPage() {
         </Modal>
       )}
     </div>
+    </Page>
   );
 }
 

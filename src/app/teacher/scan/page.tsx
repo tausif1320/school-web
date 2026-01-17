@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { BrowserMultiFormatReader } from "@zxing/browser";
-
+import Page from "@/components/ui/Page";
 export default function QRScanPage() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const router = useRouter();
@@ -79,6 +79,7 @@ export default function QRScanPage() {
   };
 
   return (
+    <Page>
     <div className="min-h-screen bg-[#050B14] text-white flex items-center justify-center px-6">
       <div className="w-full max-w-md space-y-6 text-center">
 
@@ -110,5 +111,6 @@ export default function QRScanPage() {
         )}
       </div>
     </div>
+    </Page>
   );
 }

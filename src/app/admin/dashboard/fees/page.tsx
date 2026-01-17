@@ -4,6 +4,7 @@ import { useState } from "react";
 import FeeStats from "@/components/fees/FeeStats";
 import FeeFilters from "@/components/fees/FeeFilters";
 import FeeTable from "@/components/fees/FeeTable";
+import Page from "@/components/ui/Page";
 
 export type Student = {
   id: number;
@@ -27,6 +28,7 @@ export default function ManageFeesPage() {
   const [classFilter, setClassFilter] = useState("all");
 
   return (
+    <Page>
     <div className="relative min-h-screen bg-[#050B14] text-white overflow-hidden">
       {/* background glows */}
       <div className="absolute top-[-200px] left-[-200px] w-[600px] h-[600px] bg-blue-600/20 blur-[160px] rounded-full" />
@@ -67,5 +69,6 @@ export default function ManageFeesPage() {
         </div>
       </div>
     </div>
+    </Page>
   );
 }

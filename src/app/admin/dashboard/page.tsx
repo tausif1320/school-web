@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Page from "@/components/ui/Page";
 import {
   Users,
   GraduationCap,
@@ -46,6 +47,7 @@ export default function AdminDashboard() {
   }, [theme]);
 
   return (
+    <Page>
     <div className="max-w-7xl mx-auto space-y-12">
 
       {/* Header */}
@@ -122,6 +124,7 @@ export default function AdminDashboard() {
         </div>
       </div>
     </div>
+    </Page>
   );
 }
 

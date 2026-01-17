@@ -2,6 +2,7 @@
 
 import { CheckCircle, XCircle, Clock } from "lucide-react";
 import { useSchool, AttendanceStatus } from "@/context/SchoolContext";
+import Page from "@/components/ui/Page";
 
 export default function AttendancePage() {
   const { teachers, teacherAttendance, setTeacherAttendance } = useSchool();
@@ -18,6 +19,7 @@ export default function AttendancePage() {
   const late = Object.values(teacherAttendance).filter(s => s === "late").length;
 
   return (
+    <Page>
     <div className="max-w-6xl mx-auto space-y-8">
 
       {/* Header */}
@@ -91,6 +93,7 @@ export default function AttendancePage() {
         </div>
       </div>
     </div>
+    </Page>
   );
 }
 
