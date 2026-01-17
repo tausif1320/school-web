@@ -104,10 +104,11 @@ export default function TeacherProfilePage() {
           </div>
         </div>
 
-        {showAttendance && (
+                {showAttendance && (
           <div className="space-y-8">
             <h2 className="text-2xl font-semibold">Attendance Records</h2>
 
+            {/* Monthly Attendance */}
             <TableCard title="Monthly Attendance">
               <Table>
                 <thead>
@@ -130,8 +131,71 @@ export default function TeacherProfilePage() {
                 </tbody>
               </Table>
             </TableCard>
+
+            {/* Absence Summary */}
+            <TableCard title="Absence Summary">
+              <Table>
+                <thead>
+                  <tr>
+                    <Th>Month</Th>
+                    <Th>Year</Th>
+                    <Th>Absent (This Month)</Th>
+                    <Th>Total Absent</Th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <Td>February</Td>
+                    <Td>2026</Td>
+                    <Td className="text-yellow-300">1</Td>
+                    <Td className="text-red-300">10</Td>
+                  </tr>
+                </tbody>
+              </Table>
+            </TableCard>
+
+            {/* Day-wise Attendance */}
+            <TableCard title="Day-wise Attendance (Current Month)">
+              <Table>
+                <thead>
+                  <tr>
+                    <Th>Date</Th>
+                    <Th>Status</Th>
+                    <Th>Check-in</Th>
+                    <Th>Check-out</Th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    ["1 Feb", "Present", "09:02 AM", "04:31 PM"],
+                    ["2 Feb", "Present", "08:59 AM", "04:35 PM"],
+                    ["3 Feb", "Late", "09:18 AM", "04:20 PM"],
+                    ["4 Feb", "Present", "09:00 AM", "04:28 PM"],
+                    ["5 Feb", "Absent", "-", "-"],
+                  ].map(([date, status, inTime, outTime]) => (
+                    <tr key={date}>
+                      <Td>{date}</Td>
+                      <Td
+                        className={
+                          status === "Present"
+                            ? "text-emerald-300"
+                            : status === "Late"
+                            ? "text-yellow-300"
+                            : "text-red-300"
+                        }
+                      >
+                        {status}
+                      </Td>
+                      <Td>{inTime}</Td>
+                      <Td>{outTime}</Td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </TableCard>
           </div>
         )}
+
       </div>
 
       {editing && (
