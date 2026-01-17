@@ -10,12 +10,13 @@ export default function Page() {
 
   const [search, setSearch] = useState("");
   const [classFilter, setClassFilter] = useState("all");
-
+  const [loading ,setLoading ] = useState(false);
   const [viewing, setViewing] = useState<Student | null>(null);
   const [adding, setAdding] = useState(false);
   const [editing, setEditing] = useState<Student | null>(null);
   const [deleting, setDeleting] = useState<Student | null>(null);
-
+  const [saving, setSaving] = useState(false);
+  const [deletingLoading, setDeletingLoading] = useState(false);
   const [form, setForm] = useState<Omit<Student, "id">>({
     admissionNo: "",
     name: "",
@@ -46,24 +47,42 @@ export default function Page() {
     });
 
   const addStudent = () => {
+    setSaving(true);
+    setTimeout(() => {
     setStudents((prev) => [...prev, { id: Date.now(), ...form }]);
     resetForm();
     setAdding(false);
-  };
+    setSaving(false);
+  }, 600);
+};
 
   const updateStudent = () => {
-    if (!editing) return;
+  if (!editing) return;
+
+  setSaving(true);
+
+  setTimeout(() => {
     setStudents((prev) =>
       prev.map((s) => (s.id === editing.id ? { ...editing, ...form } : s))
     );
     setEditing(null);
-  };
+    setSaving(false);
+  }, 600);
+};
+
 
   const deleteStudent = () => {
-    if (!deleting) return;
+  if (!deleting) return;
+
+  setDeletingLoading(true);
+
+  setTimeout(() => {
     setStudents((prev) => prev.filter((s) => s.id !== deleting.id));
     setDeleting(null);
-  };
+    setDeletingLoading(false);
+  }, 600);
+};
+
 
   return (
     <div className="max-w-7xl mx-auto space-y-8">
@@ -71,8 +90,10 @@ export default function Page() {
       {/* Header */}
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-semibold">Students</h1>
+
         <button
-          onClick={() => setAdding(true)}
+          onClick={() => setAdding(true)} 
+          
           className="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-xl transition"
         >
           + Add Student
@@ -140,7 +161,7 @@ export default function Page() {
       {adding && (
         <Modal onClose={() => setAdding(false)} title="Add Student">
           <Form form={form} setForm={setForm} />
-          <PrimaryButton onClick={addStudent}>Add Student</PrimaryButton>
+          <PrimaryButton loading={saving} onClick={addStudent}>Add Student</PrimaryButton>
         </Modal>
       )}
 
@@ -148,7 +169,7 @@ export default function Page() {
       {editing && (
         <Modal onClose={() => setEditing(null)} title="Edit Student">
           <Form form={form} setForm={setForm} />
-          <PrimaryButton onClick={updateStudent}>Save Changes</PrimaryButton>
+          <PrimaryButton loading={saving} onClick={updateStudent}>Save Changes</PrimaryButton>
         </Modal>
       )}
 
@@ -157,7 +178,7 @@ export default function Page() {
         <Modal onClose={() => setDeleting(null)} title="Confirm Delete">
           <p className="opacity-70">Delete {deleting.name} permanently?</p>
           <div className="flex gap-4">
-            <DangerButton onClick={deleteStudent}>Delete</DangerButton>
+            <DangerButton loading={saving} onClick={deleteStudent}>Delete</DangerButton>
             <SecondaryButton onClick={() => setDeleting(null)}>
               Cancel
             </SecondaryButton>
@@ -310,27 +331,31 @@ function IconButton({
   );
 }
 
-function PrimaryButton({ children, onClick }: any) {
+function PrimaryButton({ children, onClick, loading }: any) {
   return (
     <button
       onClick={onClick}
-      className="w-full bg-blue-600 py-2 rounded-xl"
+      disabled={loading}
+      className="w-full bg-blue-600 py-2 rounded-xl relative"
     >
-      {children}
+      {loading ? "Saving..." : children}
     </button>
   );
 }
 
-function DangerButton({ children, onClick }: any) {
+
+function DangerButton({ children, onClick, loading }: any) {
   return (
     <button
       onClick={onClick}
+      disabled={loading}
       className="w-full bg-red-600 py-2 rounded-xl"
     >
-      {children}
+      {loading ? "Deleting..." : children}
     </button>
   );
 }
+
 
 function SecondaryButton({ children, onClick }: any) {
   return (

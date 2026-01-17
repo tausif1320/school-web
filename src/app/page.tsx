@@ -64,9 +64,9 @@ export default function RoleSelectPage() {
 >
   <div className="flex items-center justify-between gap-6 w-full">
     <div className="flex-1 space-y-3">
-      <h2 className="text-xl font-semibold">Administrator</h2>
+      <h2 className="text-xl font-semibold">Teacher</h2>
       <p className="text-sm text-slate-400">
-        Full access to system configuration and user management.
+        Manage and track teacher attendance.
       </p>
     </div>
 

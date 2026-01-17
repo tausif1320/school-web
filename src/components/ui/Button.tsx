@@ -83,7 +83,7 @@ export default function Button({
 
       {/* Hide text while loading */}
       <span className={clsx("relative", loading && "opacity-0")}>
-        {children}
+        {loading ? "Loading..." : children}
       </span>
     </button>
   );

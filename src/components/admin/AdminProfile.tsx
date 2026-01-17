@@ -8,6 +8,7 @@ import Input from "@/components/ui/Input";
 export default function AdminProfile() {
   const router = useRouter();
   const [editing, setEditing] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
 
   const [profile, setProfile] = useState({
     name: "Aaliya",
@@ -26,7 +27,11 @@ export default function AdminProfile() {
   }
 
   function handleLogout() {
-    router.push("/");
+    setLoggingOut(true);
+    setTimeout(() => {
+      router.push("/");
+    },1000);
+    
   }
 
   return (
@@ -64,6 +69,7 @@ export default function AdminProfile() {
               setTemp(profile);
               setEditing(true);
             }}
+            
             variant="primary"
             className="flex-1"
           >
@@ -73,6 +79,7 @@ export default function AdminProfile() {
           <Button
             ripple
             onClick={handleLogout}
+            loading={loggingOut}
             variant="danger"
             className="flex-1"
           >

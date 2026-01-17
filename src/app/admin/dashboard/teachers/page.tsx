@@ -12,6 +12,7 @@ type Teacher = {
 };
 
 export default function ManageTeachersPage() {
+  const [saving, setSaving] = useState(false);
   const [teachers, setTeachers] = useState<Teacher[]>([
     {
       id: 1,
@@ -40,8 +41,11 @@ export default function ManageTeachersPage() {
   });
 
   function handleAddTeacher() {
-    if (!form.name || !form.email) return;
+  if (!form.name || !form.email) return;
 
+  setSaving(true);
+
+  setTimeout(() => {
     setTeachers((prev) => [
       ...prev,
       { id: Date.now(), ...form },
@@ -49,7 +53,10 @@ export default function ManageTeachersPage() {
 
     setForm({ name: "", email: "", phone: "", designation: "" });
     setAdding(false);
-  }
+    setSaving(false);
+  }, 600);
+}
+
 
   function handleRemove(id: number, name: string) {
     if (confirm(`Remove ${name}? This cannot be undone.`)) {
@@ -168,8 +175,8 @@ export default function ManageTeachersPage() {
           </div>
 
           <div className="flex gap-4 pt-2">
-            <button onClick={handleAddTeacher} className="flex-1 py-3 bg-blue-600 rounded-xl">
-              Save Teacher
+            <button onClick={handleAddTeacher} disabled={saving} className="flex-1 py-3 bg-blue-600 rounded-xl">
+              {saving ? "saving..." : "Save Teacher"}
             </button>
             <button onClick={() => setAdding(false)} className="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl">
               Cancel

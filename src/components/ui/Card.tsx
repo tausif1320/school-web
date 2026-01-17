@@ -1,9 +1,19 @@
-import { ReactNode } from "react";
+import clsx from "clsx";
 
-export default function Card({ children, className = "" }: { children: ReactNode; className?: string }) {
+type CardProps = {
+  children: React.ReactNode;
+  className?: string;
+  hover?: boolean;
+};
+
+export default function Card({ children, className, hover = true }: CardProps) {
   return (
     <div
-      className={`glass rounded-2xl p-6 ${className}`}
+      className={clsx(
+        "glass rounded-2xl p-6",
+        hover && "transition hover:-translate-y-[2px] hover:shadow-xl hover:shadow-blue-500/10",
+        className
+      )}
     >
       {children}
     </div>

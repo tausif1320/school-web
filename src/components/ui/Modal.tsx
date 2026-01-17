@@ -1,24 +1,21 @@
-import { ReactNode } from "react";
-
-export default function Modal({
-  open,
-  onClose,
-  children,
-}: {
-  open: boolean;
+type ModalProps = {
+  title?: string;
+  children: React.ReactNode;
   onClose: () => void;
-  children: ReactNode;
-}) {
-  if (!open) return null;
+};
 
+export default function Modal({ title, children, onClose }: ModalProps) {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
-      <div
-        onClick={onClose}
-        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-      />
+    <div className="fixed inset-0 bg-black/70 backdrop-blur flex items-center justify-center px-4 z-50">
+      <div className="glass max-w-xl w-full p-6 space-y-4 relative">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-white/60 hover:text-white"
+        >
+          ✕
+        </button>
 
-      <div className="relative glass max-w-xl w-full p-6 rounded-2xl">
+        {title && <h2 className="text-xl font-semibold">{title}</h2>}
         {children}
       </div>
     </div>

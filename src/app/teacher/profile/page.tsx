@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
+import { UserStar } from "lucide-react";
 
 export default function TeacherProfilePage() {
   const router = useRouter();
@@ -22,14 +23,18 @@ export default function TeacherProfilePage() {
   });
 
   const [temp, setTemp] = useState(profile);
-
+  const [loggingOut, setLoggingOut] = useState(false);
   function handleSave() {
     setProfile(temp);
     setEditing(false);
   }
 
   function handleLogout() {
-    router.push("/");
+    setLoggingOut(true);
+    setTimeout(() => {
+      router.push("/");
+    },1000);
+    
   }
 
   return (
@@ -68,9 +73,11 @@ export default function TeacherProfilePage() {
               onClick={() => {
                 setTemp(profile);
                 setEditing(true);
+                
               }}
               ripple
               variant="primary"
+              
               className="flex-1"
             >
               Edit Profile
@@ -86,6 +93,7 @@ export default function TeacherProfilePage() {
             <Button
               ripple
               onClick={handleLogout}
+              loading={loggingOut}
               variant="danger"
               className="flex-1"
             >
