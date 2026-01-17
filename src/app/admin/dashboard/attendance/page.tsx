@@ -3,6 +3,7 @@
 import { CheckCircle, XCircle, Clock } from "lucide-react";
 import { useSchool, AttendanceStatus } from "@/context/SchoolContext";
 import Page from "@/components/ui/Page";
+import EmptyState from "@/components/ui/EmptyStates";
 
 export default function AttendancePage() {
   const { teachers, teacherAttendance, setTeacherAttendance } = useSchool();
@@ -36,61 +37,68 @@ export default function AttendancePage() {
         <Stat label="Total" value={teachers.length} color="blue" />
       </div>
 
-      {/* Table */}
+      {/* Table OR Empty State */}
       <div className="glass p-4 transition hover:-translate-y-[2px] hover:shadow-xl hover:shadow-blue-500/10">
-        <div className="overflow-x-auto">
-          <table className="min-w-[800px] w-full text-sm">
-            <thead className="border-b border-white/10 text-left opacity-60">
-              <tr>
-                <th className="px-6 py-4">Name</th>
-                <th className="px-6 py-4">Designation</th>
-                <th className="px-6 py-4 text-right">Mark / Override</th>
-              </tr>
-            </thead>
+        {teachers.length === 0 ? (
+          <EmptyState
+            title="No teachers available"
+            description="Teachers will appear here once they are added to the system."
+          />
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-[800px] w-full text-sm">
+              <thead className="border-b border-white/10 text-left opacity-60">
+                <tr>
+                  <th className="px-6 py-4">Name</th>
+                  <th className="px-6 py-4">Designation</th>
+                  <th className="px-6 py-4 text-right">Mark / Override</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              {teachers.map(t => {
-                const status = teacherAttendance[t.id];
+              <tbody>
+                {teachers.map(t => {
+                  const status = teacherAttendance[t.id];
 
-                return (
-                  <tr
-                    key={t.id}
-                    className="border-b border-white/5 hover:bg-white/5 transition"
-                  >
-                    <td className="px-6 py-4 font-medium">{t.name}</td>
-                    <td className="px-6 py-4 opacity-60">{t.designation}</td>
+                  return (
+                    <tr
+                      key={t.id}
+                      className="border-b border-white/5 hover:bg-white/5 transition"
+                    >
+                      <td className="px-6 py-4 font-medium">{t.name}</td>
+                      <td className="px-6 py-4 opacity-60">{t.designation}</td>
 
-                    <td className="px-6 py-4 text-right space-x-2">
-                      <AttendanceButton
-                        active={status === "present"}
-                        onClick={() => setStatus(t.id, "present")}
-                        color="green"
-                      >
-                        <CheckCircle size={18} />
-                      </AttendanceButton>
+                      <td className="px-6 py-4 text-right space-x-2">
+                        <AttendanceButton
+                          active={status === "present"}
+                          onClick={() => setStatus(t.id, "present")}
+                          color="green"
+                        >
+                          <CheckCircle size={18} />
+                        </AttendanceButton>
 
-                      <AttendanceButton
-                        active={status === "late"}
-                        onClick={() => setStatus(t.id, "late")}
-                        color="orange"
-                      >
-                        <Clock size={18} />
-                      </AttendanceButton>
+                        <AttendanceButton
+                          active={status === "late"}
+                          onClick={() => setStatus(t.id, "late")}
+                          color="orange"
+                        >
+                          <Clock size={18} />
+                        </AttendanceButton>
 
-                      <AttendanceButton
-                        active={status === "absent"}
-                        onClick={() => setStatus(t.id, "absent")}
-                        color="red"
-                      >
-                        <XCircle size={18} />
-                      </AttendanceButton>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+                        <AttendanceButton
+                          active={status === "absent"}
+                          onClick={() => setStatus(t.id, "absent")}
+                          color="red"
+                        >
+                          <XCircle size={18} />
+                        </AttendanceButton>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </div>
     </Page>

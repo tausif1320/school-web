@@ -5,6 +5,7 @@ import FeeStats from "@/components/fees/FeeStats";
 import FeeFilters from "@/components/fees/FeeFilters";
 import FeeTable from "@/components/fees/FeeTable";
 import Page from "@/components/ui/Page";
+import EmptyState from "@/components/ui/EmptyStates";
 
 export type Student = {
   id: number;
@@ -59,13 +60,20 @@ export default function ManageFeesPage() {
 
         {/* FeeTable - hover added via wrapper only */}
         <div className="transition hover:-translate-y-[2px] hover:shadow-xl hover:shadow-blue-500/10">
-          <FeeTable
-            students={students}
-            setStudents={setStudents}
-            search={search}
-            status={status}
-            classFilter={classFilter}
-          />
+          {students.length === 0 ? (
+            <EmptyState
+              title="No fee records"
+              description="There are no students available for fee tracking."
+            />
+          ) : (
+            <FeeTable
+              students={students}
+              setStudents={setStudents}
+              search={search}
+              status={status}
+              classFilter={classFilter}
+            />
+          )}
         </div>
       </div>
     </div>

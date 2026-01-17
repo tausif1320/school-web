@@ -4,6 +4,7 @@ import { useState, ReactNode } from "react";
 import Input from "@/components/ui/Input";
 import Page from "@/components/ui/Page";
 import { useToast } from "@/components/ui/Toast";
+import EmptyState from "@/components/ui/EmptyStates";
 
 type Teacher = {
   id: number;
@@ -45,11 +46,9 @@ export default function ManageTeachersPage() {
 
   function handleAddTeacher() {
   if (!form.name || !form.email) {
-    showToast("Name and Email required", "error")
+    showToast("Name and Email required", "error");
     return;
   }
-
-    
 
   setSaving(true);
 
@@ -59,7 +58,7 @@ export default function ManageTeachersPage() {
       { id: Date.now(), ...form },
     ]);
 
-    showToast("Teacher added successfully", "success")
+    showToast("Teacher added successfully", "success");
 
     setForm({ name: "", email: "", phone: "", designation: "" });
     setAdding(false);
@@ -67,11 +66,10 @@ export default function ManageTeachersPage() {
   }, 600);
 }
 
-
   function handleRemove(id: number, name: string) {
     if (confirm(`Remove ${name}? This cannot be undone.`)) {
       setTeachers((prev) => prev.filter((t) => t.id !== id));
-      showToast("Teacher removed", "info")
+      showToast("Teacher removed", "info");
     }
   }
 
@@ -94,46 +92,53 @@ export default function ManageTeachersPage() {
         </button>
       </div>
 
-      {/* Table */}
+      {/* Table OR Empty State */}
       <div className="glass p-6">
-        <div className="overflow-x-auto">
-          <table className="min-w-[750px] w-full text-sm">
-            <thead>
-              <tr className="text-slate-400 border-b border-white/10">
-                <th className="text-left py-3">Name</th>
-                <th>Email</th>
-                <th>Designation</th>
-                <th>Phone</th>
-                <th className="text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {teachers.map((t) => (
-                <tr key={t.id} className="border-b border-white/5">
-                  <td className="py-4">{t.name}</td>
-                  <td>{t.email}</td>
-                  <td>{t.designation}</td>
-                  <td>{t.phone}</td>
-                  <td className="text-right space-x-2">
-                    <button
-                      onClick={() => setSelected(t)}
-                      className="px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-lg text-blue-300"
-                    >
-                      View
-                    </button>
-
-                    <button
-                      onClick={() => handleRemove(t.id, t.name)}
-                      className="px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-lg text-red-300"
-                    >
-                      Remove
-                    </button>
-                  </td>
+        {teachers.length === 0 ? (
+          <EmptyState
+            title="No teachers found"
+            description="Add your first teacher to start managing profiles."
+          />
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="min-w-[750px] w-full text-sm">
+              <thead>
+                <tr className="text-slate-400 border-b border-white/10">
+                  <th className="text-left py-3">Name</th>
+                  <th>Email</th>
+                  <th>Designation</th>
+                  <th>Phone</th>
+                  <th className="text-right">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {teachers.map((t) => (
+                  <tr key={t.id} className="border-b border-white/5">
+                    <td className="py-4">{t.name}</td>
+                    <td>{t.email}</td>
+                    <td>{t.designation}</td>
+                    <td>{t.phone}</td>
+                    <td className="text-right space-x-2">
+                      <button
+                        onClick={() => setSelected(t)}
+                        className="px-4 py-2 bg-blue-500/10 border border-blue-500/20 rounded-lg text-blue-300"
+                      >
+                        View
+                      </button>
+
+                      <button
+                        onClick={() => handleRemove(t.id, t.name)}
+                        className="px-4 py-2 bg-red-500/10 border border-red-500/20 rounded-lg text-red-300"
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
 
       {/* VIEW PROFILE */}

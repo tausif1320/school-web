@@ -5,6 +5,7 @@ import { Eye, Pencil, Trash2, X } from "lucide-react";
 import { useSchool, Student } from "@/context/SchoolContext";
 import Input from "@/components/ui/Input";
 import { useToast } from "@/components/ui/Toast";
+import EmptyState from "@/components/ui/EmptyStates";
 
 
 export default function Page() {
@@ -118,38 +119,53 @@ export default function Page() {
 
       {/* Student List */}
       <div className="space-y-3">
-        {filtered.map((s) => (
-          <div
-            key={s.id}
-            className="glass p-4 flex justify-between items-center"
-          >
-            <div>
-              <p className="font-medium">{s.name}</p>
-              <p className="text-xs opacity-60">
-                {s.admissionNo} • Class {s.class}-{s.section}
-              </p>
-            </div>
-
-            <div className="flex gap-3">
-              <IconButton onClick={() => setViewing(s)}>
-                <Eye size={16} />
-              </IconButton>
-
-              <IconButton
-                onClick={() => {
-                  setEditing(s);
-                  setForm(s);
-                }}
+        {filtered.length === 0 ? (
+          <EmptyState
+            title="No students found"
+            description="Add your first student to get started."
+            action={
+              <button
+                onClick={() => setAdding(true)}
+                className="bg-blue-600 px-5 py-2 rounded-xl"
               >
-                <Pencil size={16} />
-              </IconButton>
+                + Add Student
+              </button>
+            }
+          />
+        ) : (
+          filtered.map((s) => (
+            <div
+              key={s.id}
+              className="glass p-4 flex justify-between items-center"
+            >
+              <div>
+                <p className="font-medium">{s.name}</p>
+                <p className="text-xs opacity-60">
+                  {s.admissionNo} • Class {s.class}-{s.section}
+                </p>
+              </div>
 
-              <IconButton danger onClick={() => setDeleting(s)}>
-                <Trash2 size={16} />
-              </IconButton>
+              <div className="flex gap-3">
+                <IconButton onClick={() => setViewing(s)}>
+                  <Eye size={16} />
+                </IconButton>
+
+                <IconButton
+                  onClick={() => {
+                    setEditing(s);
+                    setForm(s);
+                  }}
+                >
+                  <Pencil size={16} />
+                </IconButton>
+
+                <IconButton danger onClick={() => setDeleting(s)}>
+                  <Trash2 size={16} />
+                </IconButton>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
 
       {/* VIEW */}
