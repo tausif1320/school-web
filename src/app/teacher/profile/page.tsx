@@ -199,43 +199,56 @@ export default function TeacherProfilePage() {
       </div>
 
       {editing && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center px-4 z-50">
-          <div className="w-full max-w-xl bg-[#0A1220] border border-white/10 rounded-2xl p-6 space-y-6">
+  <div
+    className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center px-4 z-50"
+    onKeyDown={(e) => {
+      if (e.key === "Escape") setEditing(false);
+    }}
+  >
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSave();
+      }}
+      className="w-full max-w-xl bg-[#0A1220] border border-white/10 rounded-2xl p-6 space-y-6"
+      tabIndex={-1}
+    >
+      <h2 className="text-xl font-semibold">Edit Profile</h2>
 
-            <h2 className="text-xl font-semibold">Edit Profile</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <Input autoFocus label="Name" value={temp.name} onChange={(e) => setTemp({ ...temp, name: e.target.value })} />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <Input label="Name" value={temp.name} onChange={(e) => setTemp({ ...temp, name: e.target.value })} />
+        <Input label="Email" type="email" value={temp.email} onChange={(e) => setTemp({ ...temp, email: e.target.value })} />
 
-              <Input label="Email" type="email" value={temp.email} onChange={(e) => setTemp({ ...temp, email: e.target.value })} />
+        <Input label="Phone" numeric maxLength={10} value={temp.phone} onChange={(e) => setTemp({ ...temp, phone: e.target.value })} />
 
-              <Input label="Phone" numeric maxLength={10} value={temp.phone} onChange={(e) => setTemp({ ...temp, phone: e.target.value })} />
+        <Input label="Department" value={temp.department} onChange={(e) => setTemp({ ...temp, department: e.target.value })} />
 
-              <Input label="Department" value={temp.department} onChange={(e) => setTemp({ ...temp, department: e.target.value })} />
+        <Input label="Designation" value={temp.designation} onChange={(e) => setTemp({ ...temp, designation: e.target.value })} />
 
-              <Input label="Designation" value={temp.designation} onChange={(e) => setTemp({ ...temp, designation: e.target.value })} />
+        <Input label="Qualification" value={temp.qualification} onChange={(e) => setTemp({ ...temp, qualification: e.target.value })} />
+      </div>
 
-              <Input label="Qualification" value={temp.qualification} onChange={(e) => setTemp({ ...temp, qualification: e.target.value })} />
-            </div>
+      <div className="flex gap-4 pt-2">
+        <button
+          type="submit"
+          className="flex-1 rounded-xl bg-gradient-to-r from-emerald-500/70 to-teal-600/70 py-3 font-medium"
+        >
+          Save Changes
+        </button>
 
-            <div className="flex gap-4 pt-2">
-              <button
-                onClick={handleSave}
-                className="flex-1 rounded-xl bg-gradient-to-r from-emerald-500/70 to-teal-600/70 py-3 font-medium"
-              >
-                Save Changes
-              </button>
+        <button
+          type="button"
+          onClick={() => setEditing(false)}
+          className="flex-1 rounded-xl bg-white/5 border border-white/10 py-3 font-medium"
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  </div>
+)}
 
-              <button
-                onClick={() => setEditing(false)}
-                className="flex-1 rounded-xl bg-white/5 border border-white/10 py-3 font-medium"
-              >
-                Cancel
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
     </Page>
   );

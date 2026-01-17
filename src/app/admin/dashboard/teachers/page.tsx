@@ -260,7 +260,7 @@ function Modal({ children, onClose }: { children: ReactNode; onClose: () => void
         className="glass max-w-3xl w-full p-6 space-y-6 max-h-[90vh] overflow-y-auto"
       >
         <div className="flex justify-end">
-          <button onClick={onClose} className="text-slate-400">✕</button>
+          <button tabIndex={-1} onClick={onClose} className="text-slate-400">✕</button>
         </div>
         {children}
       </div>
