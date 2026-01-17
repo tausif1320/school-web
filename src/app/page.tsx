@@ -32,58 +32,51 @@ export default function RoleSelectPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
           {/* Admin */}
-          <Button
-            ripple
-            variant="secondary"
-            onClick={() => router.push("/login/admin")}
-            className="
-              p-6 flex items-center justify-between gap-6 text-left w-full
-              transition-all duration-200
-              hover:-translate-y-[2px]
-              hover:shadow-xl hover:shadow-blue-500/10
-              active:translate-y-0
-            "
-          >
-            <div className="flex-1 space-y-3">
-              <h2 className="text-xl font-semibold">Administrator</h2>
-              <p className="text-sm text-slate-400">
-                Full access to system configuration and user management.
-              </p>
-            </div>
+          {/* Admin */}
+<Button
+  ripple
+  variant="secondary"
+  onClick={() => router.push("/login/admin")}
+  className="p-6 w-full transition-all duration-200 hover:-translate-y-[2px] hover:shadow-xl hover:shadow-blue-500/10"
+>
+  <div className="flex items-center justify-between gap-6 w-full">
+    <div className="flex-1 space-y-3">
+      <h2 className="text-xl font-semibold">Administrator</h2>
+      <p className="text-sm text-slate-400">
+        Full access to system configuration and user management.
+      </p>
+    </div>
 
-            <img
-              src="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?q=80&w=500"
-              alt="Admin"
-              className="w-28 h-28 rounded-xl object-cover flex-shrink-0"
-            />
-          </Button>
+    <img
+      src="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?q=80&w=500"
+      className="w-28 h-28 rounded-xl object-cover flex-shrink-0"
+    />
+  </div>
+</Button>
+
 
           {/* Teacher */}
-          <Button
-            ripple
-            variant="secondary"
-            onClick={() => router.push("/login/teacher")}
-            className="
-              p-6 flex items-center justify-between gap-6 text-left w-full
-              transition-all duration-200
-              hover:-translate-y-[2px]
-              hover:shadow-xl hover:shadow-blue-500/10
-              active:translate-y-0
-            "
-          >
-            <div className="flex-1 space-y-3">
-              <h2 className="text-xl font-semibold">Teacher</h2>
-              <p className="text-sm text-slate-400">
-                Manage classes, grade assignments, and track attendance.
-              </p>
-            </div>
+<Button
+  ripple
+  variant="secondary"
+  onClick={() => router.push("/login/teacher")}
+  className="p-6 w-full transition-all duration-200 hover:-translate-y-[2px] hover:shadow-xl hover:shadow-blue-500/10"
+>
+  <div className="flex items-center justify-between gap-6 w-full">
+    <div className="flex-1 space-y-3">
+      <h2 className="text-xl font-semibold">Administrator</h2>
+      <p className="text-sm text-slate-400">
+        Full access to system configuration and user management.
+      </p>
+    </div>
 
-            <img
-              src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=500"
-              alt="Teacher"
-              className="w-28 h-28 rounded-xl object-cover flex-shrink-0"
-            />
-          </Button>
+    <img
+      src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?q=80&w=500"
+      className="w-28 h-28 rounded-xl object-cover flex-shrink-0"
+    />
+  </div>
+</Button>
+
         </div>
 
         {/* Footer */}

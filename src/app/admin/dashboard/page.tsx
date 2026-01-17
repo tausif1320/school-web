@@ -84,6 +84,13 @@ export default function AdminDashboard() {
         <div className="glass p-8 lg:col-span-2 transition hover:-translate-y-[2px] hover:shadow-xl hover:shadow-blue-500/10">
           <h3 className="text-lg font-semibold mb-6">Attendance Trends</h3>
           <svg viewBox="0 0 300 120" className="w-full h-48">
+            <defs>
+              <linearGradient id="trendGradient" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="#3b82f6" />
+                <stop offset="100%" stopColor="#a855f7" />
+              </linearGradient>
+            </defs>
+
             <polyline
               fill="none"
               stroke="url(#trendGradient)"
@@ -118,24 +125,44 @@ export default function AdminDashboard() {
   );
 }
 
+/* ---------- Glow Cards ---------- */
+
 function StatCard({ title, value, color, Icon }: StatCardProps) {
+  const glow: Record<GlowColor, string> = {
+    blue: "bg-blue-500/20 text-blue-400 shadow-[0_0_20px_#3b82f660]",
+    purple: "bg-purple-500/20 text-purple-400 shadow-[0_0_20px_#a855f760]",
+    green: "bg-green-500/20 text-green-400 shadow-[0_0_20px_#22c55e60]",
+    orange: "bg-orange-500/20 text-orange-400 shadow-[0_0_20px_#f9731660]",
+  };
+
   return (
     <div className="glass p-6 transition-all duration-200 hover:-translate-y-[2px] hover:shadow-xl hover:shadow-blue-500/10">
-      <Icon size={22} className="mb-4 opacity-80" />
+      <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${glow[color]}`}>
+        <Icon size={20} />
+      </div>
       <h3 className="text-3xl font-bold">{value}</h3>
       <p className="opacity-60 text-sm mt-1">{title}</p>
     </div>
   );
 }
 
-function ActionItem({ title, subtitle, Icon, href }: ActionItemProps) {
+function ActionItem({ title, subtitle, color, Icon, href }: ActionItemProps) {
+  const glow: Record<GlowColor, string> = {
+    blue: "bg-blue-500/20 text-blue-400 shadow-[0_0_20px_#3b82f660]",
+    purple: "bg-purple-500/20 text-purple-400 shadow-[0_0_20px_#a855f760]",
+    green: "bg-green-500/20 text-green-400 shadow-[0_0_20px_#22c55e60]",
+    orange: "bg-orange-500/20 text-orange-400 shadow-[0_0_20px_#f9731660]",
+  };
+
   return (
     <Link
       href={href}
       className="glass p-6 flex justify-between items-center transition-all duration-200 hover:-translate-y-[2px] hover:shadow-xl hover:shadow-blue-500/10"
     >
       <div className="flex gap-4 items-center">
-        <Icon size={22} />
+        <div className={`w-11 h-11 rounded-xl flex items-center justify-center ${glow[color]}`}>
+          <Icon size={20} />
+        </div>
         <div>
           <p className="font-medium">{title}</p>
           <p className="opacity-60 text-sm">{subtitle}</p>
