@@ -9,6 +9,7 @@ type Toast = {
   id: number;
   message: string;
   type: ToastType;
+  leaving?: boolean;
 };
 
 type ToastContextType = {
@@ -22,11 +23,20 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
 
   function showToast(message: string, type: ToastType = "info") {
     const id = Date.now();
+
     setToasts((prev) => [...prev, { id, message, type }]);
 
+    // Start exit animation slightly before removal
+    setTimeout(() => {
+      setToasts((prev) =>
+        prev.map((t) => (t.id === id ? { ...t, leaving: true } : t))
+      );
+    }, 2600);
+
+    // Remove after animation finishes
     setTimeout(() => {
       setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 3000);
+    }, 2900);
   }
 
   return (
@@ -34,12 +44,17 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
       {children}
 
       {/* Toast UI */}
-      <div className="fixed top-6 right-6 z-[9999] space-y-3">
+      <div className="fixed top-6 right-6 z-[9999] space-y-3 pointer-events-none">
         {toasts.map((t) => (
           <div
             key={t.id}
             className={clsx(
-              "px-5 py-3 rounded-xl backdrop-blur border shadow-lg animate-slide-in",
+              "px-5 py-3 rounded-xl backdrop-blur border shadow-lg",
+              "transition-all duration-200 ease-[cubic-bezier(.22,1,.36,1)]",
+              "will-change-transform will-change-opacity",
+              t.leaving
+                ? "opacity-0 translate-y-2 scale-[0.98]"
+                : "opacity-100 translate-y-0 scale-100",
               {
                 "bg-green-500/10 border-green-500/30 text-green-300":
                   t.type === "success",
