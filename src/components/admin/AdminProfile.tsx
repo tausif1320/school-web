@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "../ui/Button";
 import Input from "@/components/ui/Input";
+import Page from "../ui/Page";
 
 export default function AdminProfile() {
   const router = useRouter();
@@ -35,6 +36,7 @@ export default function AdminProfile() {
   }
 
   return (
+    <Page>
     <div className="max-w-5xl mx-auto space-y-8">
 
       <div>
@@ -119,6 +121,7 @@ export default function AdminProfile() {
         </div>
       )}
     </div>
+    </Page>
   );
 }
 
