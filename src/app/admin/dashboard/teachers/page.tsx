@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, useRef, useEffect } from "react";
 import Input from "@/components/ui/Input";
 import Page from "@/components/ui/Page";
 import { useToast } from "@/components/ui/Toast";
-import EmptyState from "@/components/ui/EmptyStates";
 
 type Teacher = {
   id: number;
@@ -16,7 +15,7 @@ type Teacher = {
 
 export default function ManageTeachersPage() {
   const [saving, setSaving] = useState(false);
-  const {showToast} = useToast();
+  const { showToast } = useToast();
   const [teachers, setTeachers] = useState<Teacher[]>([
     {
       id: 1,
@@ -45,26 +44,26 @@ export default function ManageTeachersPage() {
   });
 
   function handleAddTeacher() {
-  if (!form.name || !form.email) {
-    showToast("Name and Email required", "error");
-    return;
+    if (!form.name || !form.email) {
+      showToast("Name and Email required", "error");
+      return;
+    }
+
+    setSaving(true);
+
+    setTimeout(() => {
+      setTeachers((prev) => [
+        ...prev,
+        { id: Date.now(), ...form },
+      ]);
+
+      showToast("Teacher added successfully", "success");
+
+      setForm({ name: "", email: "", phone: "", designation: "" });
+      setAdding(false);
+      setSaving(false);
+    }, 600);
   }
-
-  setSaving(true);
-
-  setTimeout(() => {
-    setTeachers((prev) => [
-      ...prev,
-      { id: Date.now(), ...form },
-    ]);
-
-    showToast("Teacher added successfully", "success");
-
-    setForm({ name: "", email: "", phone: "", designation: "" });
-    setAdding(false);
-    setSaving(false);
-  }, 600);
-}
 
   function handleRemove(id: number, name: string) {
     if (confirm(`Remove ${name}? This cannot be undone.`)) {
@@ -75,31 +74,24 @@ export default function ManageTeachersPage() {
 
   return (
     <Page>
-    <div className="max-w-6xl mx-auto space-y-8">
+      <div className="max-w-6xl mx-auto space-y-8">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+          <div>
+            <h1 className="text-3xl font-semibold">Manage Teachers</h1>
+            <p className="text-slate-400">Add, view and manage teacher profiles</p>
+          </div>
 
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-        <div>
-          <h1 className="text-3xl font-semibold">Manage Teachers</h1>
-          <p className="text-slate-400">Add, view and manage teacher profiles</p>
+          <button
+            onClick={() => setAdding(true)}
+            className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500/70 to-indigo-600/70 shadow-lg shadow-blue-500/20"
+          >
+            + Add Teacher
+          </button>
         </div>
 
-        <button
-          onClick={() => setAdding(true)}
-          className="px-6 py-3 rounded-xl bg-gradient-to-r from-blue-500/70 to-indigo-600/70 shadow-lg shadow-blue-500/20"
-        >
-          + Add Teacher
-        </button>
-      </div>
-
-      {/* Table OR Empty State */}
-      <div className="glass p-6">
-        {teachers.length === 0 ? (
-          <EmptyState
-            title="No teachers found"
-            description="Add your first teacher to start managing profiles."
-          />
-        ) : (
+        {/* Table */}
+        <div className="glass p-6">
           <div className="overflow-x-auto">
             <table className="min-w-[750px] w-full text-sm">
               <thead>
@@ -138,70 +130,87 @@ export default function ManageTeachersPage() {
               </tbody>
             </table>
           </div>
+        </div>
+
+        {/* VIEW PROFILE */}
+        {selected && (
+          <Modal onClose={() => setSelected(null)}>
+            <h2 className="text-xl font-semibold">Teacher Profile</h2>
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              <Info label="Name" value={selected.name} />
+              <Info label="Email" value={selected.email} />
+              <Info label="Phone" value={selected.phone} />
+              <Info label="Designation" value={selected.designation} />
+            </div>
+
+            <AttendanceSection />
+          </Modal>
+        )}
+
+        {/* ADD TEACHER */}
+        {adding && (
+          <Modal onClose={() => setAdding(false)}>
+            <h2 className="text-xl font-semibold">Add New Teacher</h2>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleAddTeacher();
+              }}
+              className="space-y-4"
+            >
+              <div className="grid sm:grid-cols-2 gap-4">
+                <Input
+                  autoFocus
+                  label="Name"
+                  value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })}
+                />
+
+                <Input
+                  label="Email"
+                  type="email"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                />
+
+                <Input
+                  label="Phone"
+                  numeric
+                  maxLength={10}
+                  value={form.phone}
+                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                />
+
+                <Input
+                  label="Designation"
+                  value={form.designation}
+                  onChange={(e) => setForm({ ...form, designation: e.target.value })}
+                />
+              </div>
+
+              <div className="flex gap-4 pt-2">
+                <button
+                  type="submit"
+                  disabled={saving}
+                  className="flex-1 py-3 bg-blue-600 rounded-xl"
+                >
+                  {saving ? "saving..." : "Save Teacher"}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setAdding(false)}
+                  className="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </Modal>
         )}
       </div>
-
-      {/* VIEW PROFILE */}
-      {selected && (
-        <Modal onClose={() => setSelected(null)}>
-          <h2 className="text-xl font-semibold">Teacher Profile</h2>
-
-          <div className="grid sm:grid-cols-2 gap-4">
-            <Info label="Name" value={selected.name} />
-            <Info label="Email" value={selected.email} />
-            <Info label="Phone" value={selected.phone} />
-            <Info label="Designation" value={selected.designation} />
-          </div>
-
-          <AttendanceSection />
-        </Modal>
-      )}
-
-      {/* ADD TEACHER */}
-      {adding && (
-        <Modal onClose={() => setAdding(false)}>
-          <h2 className="text-xl font-semibold">Add New Teacher</h2>
-
-          <div className="grid sm:grid-cols-2 gap-4">
-            <Input
-              label="Name"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-            />
-
-            <Input
-              label="Email"
-              type="email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-            />
-
-            <Input
-              label="Phone"
-              numeric
-              maxLength={10}
-              value={form.phone}
-              onChange={(e) => setForm({ ...form, phone: e.target.value })}
-            />
-
-            <Input
-              label="Designation"
-              value={form.designation}
-              onChange={(e) => setForm({ ...form, designation: e.target.value })}
-            />
-          </div>
-
-          <div className="flex gap-4 pt-2">
-            <button onClick={handleAddTeacher} disabled={saving} className="flex-1 py-3 bg-blue-600 rounded-xl">
-              {saving ? "saving..." : "Save Teacher"}
-            </button>
-            <button onClick={() => setAdding(false)} className="flex-1 py-3 bg-white/5 border border-white/10 rounded-xl">
-              Cancel
-            </button>
-          </div>
-        </Modal>
-      )}
-    </div>
     </Page>
   );
 }
@@ -209,9 +218,47 @@ export default function ManageTeachersPage() {
 /* ---------- Components ---------- */
 
 function Modal({ children, onClose }: { children: ReactNode; onClose: () => void }) {
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const container = modalRef.current;
+    if (!container) return;
+
+    const focusable = container.querySelectorAll<HTMLElement>(
+      'button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    first?.focus();
+
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Tab") {
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last?.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
+      }
+
+      if (e.key === "Escape") {
+        onClose();
+      }
+    }
+
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, [onClose]);
+
   return (
     <div className="fixed inset-0 bg-black/70 backdrop-blur flex justify-center items-center px-4 z-50">
-      <div className="glass max-w-3xl w-full p-6 space-y-6 max-h-[90vh] overflow-y-auto">
+      <div
+        ref={modalRef}
+        className="glass max-w-3xl w-full p-6 space-y-6 max-h-[90vh] overflow-y-auto"
+      >
         <div className="flex justify-end">
           <button onClick={onClose} className="text-slate-400">✕</button>
         </div>

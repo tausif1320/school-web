@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Eye, Pencil, Trash2, X } from "lucide-react";
 import { useSchool, Student } from "@/context/SchoolContext";
 import Input from "@/components/ui/Input";
@@ -181,19 +181,41 @@ export default function Page() {
 
       {/* ADD */}
       {adding && (
-        <Modal onClose={() => setAdding(false)} title="Add Student">
-          <Form form={form} setForm={setForm} />
-          <PrimaryButton loading={saving} onClick={addStudent}>Add Student</PrimaryButton>
-        </Modal>
-      )}
+  <Modal onClose={() => setAdding(false)} title="Add Student">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        addStudent();
+      }}
+      className="space-y-4"
+    >
+      <Form form={form} setForm={setForm} />
+      <PrimaryButton loading={saving} type="submit">
+        Add Student
+      </PrimaryButton>
+    </form>
+  </Modal>
+)}
+
 
       {/* EDIT */}
       {editing && (
-        <Modal onClose={() => setEditing(null)} title="Edit Student">
-          <Form form={form} setForm={setForm} />
-          <PrimaryButton loading={saving} onClick={updateStudent}>Save Changes</PrimaryButton>
-        </Modal>
-      )}
+  <Modal onClose={() => setEditing(null)} title="Edit Student">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        updateStudent();
+      }}
+      className="space-y-4"
+    >
+      <Form form={form} setForm={setForm} />
+      <PrimaryButton loading={saving} type="submit">
+        Save Changes
+      </PrimaryButton>
+    </form>
+  </Modal>
+)}
+
 
       {/* DELETE */}
       {deleting && (
@@ -222,6 +244,16 @@ function Modal({
   children: React.ReactNode;
   onClose: () => void;
 }) {
+  useEffect (() => {
+    function handleKey(e: KeyboardEvent) {
+      if (e.key === "Escape"){
+        onClose();
+      }
+    }
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown",handleKey);
+
+  },[onClose]);
   return (
     <div className="fixed inset-0 bg-black/70 z-50 flex justify-center items-center px-4">
       <div className="bg-[#0B1628]/95 border border-white/10 rounded-2xl p-6 w-full max-w-lg space-y-4 relative shadow-2xl">
@@ -247,6 +279,7 @@ function Form({
 
       <Field label="Admission No">
         <Input
+          autoFocus
           value={form.admissionNo}
           onChange={(e) => setForm((p) => ({ ...p, admissionNo: e.target.value }))}
           placeholder="e.g. A1023"
