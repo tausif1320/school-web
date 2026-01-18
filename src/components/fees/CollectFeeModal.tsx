@@ -1,9 +1,4 @@
-type Student = {
-  name: string;
-  class: string;
-  total: number;
-  paid: number;
-};
+import { Student } from "@/context/SchoolContext";
 
 type Props = {
   student: Student | null;
@@ -13,7 +8,7 @@ type Props = {
 export default function CollectFeeModal({ student, onClose }: Props) {
   if (!student) return null;
 
-  const due = student.total - student.paid;
+  const due = student.totalFees - student.paidFees;
 
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur flex items-center justify-center z-50">

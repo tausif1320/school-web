@@ -1,5 +1,5 @@
 import React from "react";
-import { Student } from "@/app/admin/dashboard/fees/page";
+import { Student } from "@/context/SchoolContext";
 
 type Props = {
   students: Student[];
@@ -17,23 +17,23 @@ export default function FeeTable({
   classFilter,
 }: Props) {
   const updatePaid = (id: number, amount: number) => {
-    setStudents(prev =>
-      prev.map(s =>
-        s.id === id ? { ...s, paid: Math.min(amount, s.total) } : s
+    setStudents((prev) =>
+      prev.map((s) =>
+        s.id === id ? { ...s, paid: Math.min(amount, s.totalFees) } : s
       )
     );
   };
 
-  const filtered = students.filter(s => {
+  const filtered = students.filter((s) => {
     const matchesSearch =
       s.name.toLowerCase().includes(search.toLowerCase()) ||
       s.admissionNo.toLowerCase().includes(search.toLowerCase());
 
     const matchesClass = classFilter === "all" || s.class === classFilter;
 
-    const due = s.total - s.paid;
+    const due = s.totalFees - s.paidFees;
     const state =
-      due === 0 ? "paid" : s.paid === 0 ? "pending" : "partial";
+      due === 0 ? "paid" : s.paidFees === 0 ? "pending" : "partial";
 
     const matchesStatus = status === "all" || status === state;
 
@@ -59,9 +59,9 @@ export default function FeeTable({
 
           <tbody>
             {filtered.map((s) => {
-              const due = s.total - s.paid;
+              const due = s.totalFees - s.paidFees;
               const state =
-                due === 0 ? "Paid" : s.paid === 0 ? "Pending" : "Partial";
+                due === 0 ? "Paid" : s.paidFees === 0 ? "Pending" : "Partial";
 
               const badge =
                 state === "Paid"
@@ -85,15 +85,16 @@ export default function FeeTable({
 
                   <td className="px-6 py-4">{s.class}</td>
 
-                  <td className="px-6 py-4 text-right">₹{s.total.toLocaleString("en-IN")}</td>
-
+                  <td className="px-6 py-4 text-right">
+                    ₹{s.totalFees.toLocaleString("en-IN")}
+                  </td>
 
                   <td className="px-6 py-4 text-right">
                     <input
                       type="number"
-                      value={s.paid}
+                      value={s.paidFees}
                       min={0}
-                      max={s.total}
+                      max={s.totalFees}
                       onChange={(e) =>
                         updatePaid(s.id, Number(e.target.value))
                       }
@@ -101,7 +102,9 @@ export default function FeeTable({
                     />
                   </td>
 
-                  <td className="px-6 py-4 text-right">₹{due.toLocaleString("en-IN")}</td>
+                  <td className="px-6 py-4 text-right">
+                    ₹{due.toLocaleString("en-IN")}
+                  </td>
 
                   <td className="px-6 py-4 text-center">
                     <span className={`px-3 py-1 text-xs rounded-full ${badge}`}>

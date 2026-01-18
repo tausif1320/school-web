@@ -1,4 +1,4 @@
-import { Student } from "@/app/admin/dashboard/fees/page";
+import { Student } from "@/context/SchoolContext";
 import { Wallet, CheckCircle, AlertTriangle, Users } from "lucide-react";
 
 type Props = {
@@ -6,8 +6,8 @@ type Props = {
 };
 
 export default function FeeStats({ students }: Props) {
-  const total = students.reduce((sum, s) => sum + s.total, 0);
-  const collected = students.reduce((sum, s) => sum + s.paid, 0);
+  const total = students.reduce((sum, s) => sum + s.totalFees, 0);
+  const collected = students.reduce((sum, s) => sum + s.paidFees, 0);
   const pending = total - collected;
 
   return (
