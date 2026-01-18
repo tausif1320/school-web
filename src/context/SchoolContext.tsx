@@ -14,6 +14,8 @@ export type Student = {
   section: string;
   gender: "Male" | "Female";
   parentPhone: string;
+  totalFees: number;
+  paidFees: number;
 };
 
 export type Teacher = {
@@ -61,6 +63,8 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
       section: "A",
       gender: "Female",
       parentPhone: "9876543210",
+      totalFees: 12000,
+      paidFees: 0,
     },
     {
       id: 2,
@@ -70,6 +74,8 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
       section: "B",
       gender: "Female",
       parentPhone: "9123456789",
+      totalFees: 12000,
+      paidFees:0,
     },
     {
       id: 3,
@@ -79,6 +85,8 @@ export function SchoolProvider({ children }: { children: React.ReactNode }) {
       section: "A",
       gender: "Male",
       parentPhone: "9988776655",
+      totalFees: 12000,
+      paidFees:0,
     },
   ]);
 

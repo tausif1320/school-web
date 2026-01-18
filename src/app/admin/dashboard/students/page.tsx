@@ -28,6 +28,8 @@ export default function Page() {
     section: "",
     gender: "Male",
     parentPhone: "",
+    totalFees: 0,
+    paidFees:0
   });
 
   const filtered = students.filter((s) => {
@@ -48,6 +50,8 @@ export default function Page() {
       section: "",
       gender: "Male",
       parentPhone: "",
+      totalFees:0,
+      paidFees:0,
     });
 
   const addStudent = () => {
@@ -334,6 +338,21 @@ function Form({
           }
           placeholder="e.g. 9876543210"
         />
+      </Field>
+
+      <Field label="Total Fees">
+        <Input
+          numeric
+          value={String(form.totalFees)}
+          onChange={(e) =>
+            setForm((p) => ({ ...p, totalFees:
+              Number(e.target.value || 0)
+            }))
+          }
+
+          placeholder="e.g. 15000"
+        />
+
       </Field>
     </div>
   );
